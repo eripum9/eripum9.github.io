@@ -8,10 +8,13 @@
 .site-topbar{background:linear-gradient(0deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02));padding:8px 16px;border-bottom:1px solid rgba(255,255,255,0.03)}
 .site-topbar .topbar-inner{max-width:960px;margin:0 auto;display:flex;align-items:center}
 /* smaller topbar logo (left corner) */
-.topbar-logo{width:32px;height:32px;flex:0 0 auto}
+.topbar-logo{width:32px;height:32px;flex:0 0 auto;object-fit:contain}
+/* ensure the small logo never grows larger than its container */
+.topbar-logo{max-width:40px;max-height:40px}
 .hero-logo{display:flex;justify-content:center;margin:8px 0 22px}
 /* balanced hero size: large but not oversized */
-.hero-logo object{width:320px;height:320px;max-width:90%}
+/* hero logo: prefer object if available, otherwise any img inside will size by rules */
+.hero-logo object, .hero-logo img {width:320px;height:320px;max-width:90%;object-fit:contain}
 
 @media(max-width:640px){
 	.hero-logo object{width:220px;height:220px}
