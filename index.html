@@ -35,22 +35,6 @@
   </footer>
 
   <script src="js/main.js"></script>
-  <script>
-    // Propagate page visibility to embedded SVG documents (<object>) so SVG internal CSS can pause animations
-    function propagateVisibility(){
-      const hidden = document.hidden;
-      document.querySelectorAll('object[type="image/svg+xml"]').forEach(obj => {
-        try{
-          const doc = obj.contentDocument;
-          if(doc && doc.documentElement){
-            if(hidden) doc.documentElement.setAttribute('data-page-hidden','true');
-            else doc.documentElement.removeAttribute('data-page-hidden');
-          }
-        }catch(e){/* cross-origin or not loaded yet */}
-      });
-    }
-    document.addEventListener('visibilitychange', propagateVisibility);
-    window.addEventListener('load', propagateVisibility);
-  </script>
+  <!-- removed visibility propagation script so SVG animations are not paused when the page is hidden or touched -->
 </body>
 </html>
