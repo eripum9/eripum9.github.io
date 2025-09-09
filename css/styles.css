@@ -7,9 +7,15 @@
 .site-header > div{display:none}
 .site-topbar{background:linear-gradient(0deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02));padding:8px 16px;border-bottom:1px solid rgba(255,255,255,0.03)}
 .site-topbar .topbar-inner{max-width:960px;margin:0 auto;display:flex;align-items:center}
-.topbar-logo{width:40px;height:40px;flex:0 0 auto}
+/* smaller topbar logo (left corner) */
+.topbar-logo{width:32px;height:32px;flex:0 0 auto}
 .hero-logo{display:flex;justify-content:center;margin:8px 0 22px}
-.hero-logo object{width:360px;height:360px}
+/* balanced hero size: large but not oversized */
+.hero-logo object{width:320px;height:320px;max-width:90%}
+
+@media(max-width:640px){
+	.hero-logo object{width:220px;height:220px}
+}
 /* remove the separate inline fallback image so the logo is not duplicated */
 /* .hero-inline-logo { ... } */
 h1{margin:0;font-size:1.6rem}
