@@ -11,6 +11,11 @@
 .topbar-logo{width:28px;height:28px;flex:0 0 auto;object-fit:contain}
 /* ensure the small logo never grows larger than its container */
 .topbar-logo{max-width:28px;max-height:28px}
+
+/* Animate the topbar small logo via CSS when the SVG's internal animation doesn't run (e.g. loaded via <img>) */
+@keyframes topbar-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.topbar-logo{display:inline-block;animation:topbar-spin 6s linear infinite;transform-origin:center center}
+@media (prefers-reduced-motion: reduce){ .topbar-logo{animation:none} }
 .hero-logo{display:flex;justify-content:center;margin:8px 0 22px}
 /* balanced hero size: large but not oversized */
 /* hero logo: prefer object if available, otherwise any img inside will size by rules */
