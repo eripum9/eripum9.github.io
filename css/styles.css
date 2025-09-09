@@ -16,7 +16,7 @@
 @keyframes topbar-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 .topbar-logo{display:inline-block;animation:topbar-spin 6s linear infinite;transform-origin:center center}
 /* rotor animation for inlined topbar SVG */
-.rotor{transform-origin:512px 512px;animation:topbar-spin 6s linear infinite}
+.rotor{transform-origin:50% 50%;animation:topbar-spin 6s linear infinite}
 @keyframes topbar-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion: reduce){.rotor{animation:none}}
 @media (prefers-reduced-motion: reduce){ .topbar-logo{animation:none} }
