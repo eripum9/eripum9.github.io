@@ -32,8 +32,4 @@ function updateTopbarRotation(){
     img.classList.remove('rotating');
   }
 }
-document.addEventListener('DOMContentLoaded', updateTopbarRotation);
-document.addEventListener('visibilitychange', updateTopbarRotation);
-window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', updateTopbarRotation);
-// Ensure rotation state is applied immediately in case DOMContentLoaded already fired
-updateTopbarRotation();
+// rotation removed: no topbar rotation script per user request
