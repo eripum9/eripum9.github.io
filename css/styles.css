@@ -5,7 +5,7 @@
 .site-header{display:flex;align-items:center;gap:16px;padding:12px 24px;background:rgba(255,255,255,0.02);border-bottom:0.5px solid rgba(255,255,255,0.03)}
 .logo{width:48px;height:48px}
 .site-header > div{display:none}
-.site-topbar{background:linear-gradient(0deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02));padding:0 16px;height:192px;border-bottom:0.5px solid rgba(255,255,255,0.03);display:flex;align-items:center}
+.site-topbar{background:linear-gradient(0deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02));padding:0 16px;height:48px;border-bottom:0.5px solid rgba(255,255,255,0.03);display:flex;align-items:center}
 .site-topbar .topbar-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;height:100%}
 /* slightly larger topbar logo so controller + gear read clearly */
 .topbar-logo{height:100%;width:auto;flex:0 0 auto;object-fit:contain}

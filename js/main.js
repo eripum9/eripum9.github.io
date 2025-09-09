@@ -8,3 +8,14 @@ document.addEventListener('DOMContentLoaded',()=>{
     }
   })})
 });
+
+// Pause rotor when page is hidden (copied from logo.svg script)
+document.addEventListener('visibilitychange', function(){
+  if(document.hidden){
+    document.documentElement.setAttribute('data-page-hidden','true');
+  } else {
+    document.documentElement.removeAttribute('data-page-hidden');
+  }
+});
+// Ensure attribute state is correct on load
+if(document.hidden) document.documentElement.setAttribute('data-page-hidden','true');
