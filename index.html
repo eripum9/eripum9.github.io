@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My Projects — Under Construction</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <!-- Top-left small logo only (no text) -->
+    <object class="logo" type="image/svg+xml" data="assets/images/logosmall.svg" aria-label="MythOS logo small">
+      <img src="assets/images/logosmall.svg" alt="MythOS logo" />
+    </object>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <!-- Large animated logo and page title -->
+      <div class="hero-logo">
+          <object type="image/svg+xml" data="assets/images/logo.svg" aria-label="MythOS logo large">
+            <img src="assets/images/logo.svg" alt="MythOS logo" />
+          </object>
+          <!-- Broad-compatibility fallback / inline image so the logo appears on most browsers -->
+          <img class="hero-inline-logo" src="assets/images/logo.svg" alt="MythOS logo" />
+      </div>
+      <h2>My Projects</h2>
+      <p>This website is currently under construction. Thanks for your patience — content will be available soon.</p>
+      <!-- Featured subsite link removed until approved -->
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <small>© Pygame Project — site under construction</small>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Propagate page visibility to embedded SVG documents (<object>) so SVG internal CSS can pause animations
+    function propagateVisibility(){
+      const hidden = document.hidden;
+      document.querySelectorAll('object[type="image/svg+xml"]').forEach(obj => {
+        try{
+          const doc = obj.contentDocument;
+          if(doc && doc.documentElement){
+            if(hidden) doc.documentElement.setAttribute('data-page-hidden','true');
+            else doc.documentElement.removeAttribute('data-page-hidden');
+          }
+        }catch(e){/* cross-origin or not loaded yet */}
+      });
+    }
+    document.addEventListener('visibilitychange', propagateVisibility);
+    window.addEventListener('load', propagateVisibility);
+  </script>
+</body>
+</html>
