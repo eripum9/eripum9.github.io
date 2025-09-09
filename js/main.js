@@ -35,3 +35,5 @@ function updateTopbarRotation(){
 document.addEventListener('DOMContentLoaded', updateTopbarRotation);
 document.addEventListener('visibilitychange', updateTopbarRotation);
 window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', updateTopbarRotation);
+// Ensure rotation state is applied immediately in case DOMContentLoaded already fired
+updateTopbarRotation();
