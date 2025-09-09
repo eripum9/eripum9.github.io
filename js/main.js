@@ -33,3 +33,12 @@ function updateTopbarRotation(){
   }
 }
 // rotation removed: no topbar rotation script per user request
+
+// Prevent right-click/save on the topbar logo image
+document.addEventListener('DOMContentLoaded', ()=>{
+  const img = document.querySelector('.topbar-logo');
+  if(!img) return;
+  img.addEventListener('contextmenu', (e)=>{ e.preventDefault(); });
+  // also disable dragstart to make saving harder via drag
+  img.addEventListener('dragstart', (e)=>{ e.preventDefault(); });
+});
