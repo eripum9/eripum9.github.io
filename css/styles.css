@@ -5,12 +5,13 @@
 .site-header{display:flex;align-items:center;gap:16px;padding:12px 24px;background:rgba(255,255,255,0.02);border-bottom:1px solid rgba(255,255,255,0.03)}
 .logo{width:48px;height:48px}
 .site-header > div{display:none}
-.hero-logo{display:flex;justify-content:center;margin-bottom:12px}
+.hero-logo{display:flex;justify-content:center;margin:0 0 18px}
 .hero-logo object{width:280px;height:280px}
-.hero-inline-logo{display:block;max-width:360px;width:60%;height:auto;margin:8px auto 0}
+/* remove the separate inline fallback image so the logo is not duplicated */
+/* .hero-inline-logo { ... } */
 h1{margin:0;font-size:1.6rem}
 .tagline{margin:0;color:var(--muted)}
-.hero{margin-top:18px;padding:18px;background:rgba(255,255,255,0.02);border-radius:8px}
+.hero{margin-top:0;padding:22px;background:linear-gradient(rgba(255,255,255,0.02), rgba(255,255,255,0.02));border-radius:8px}
 .buttons{display:flex;gap:12px;margin-top:12px}
 .btn{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);padding:10px 14px;border-radius:6px;text-decoration:none}
 .btn.primary{background:var(--accent);color:#04201a;border:none}
