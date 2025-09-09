@@ -12,16 +12,14 @@
     <div class="topbar-inner">
       <!-- inline the small logo SVG so it reliably renders and animates in previews and all browsers -->
       <!-- reference the gear inside the full `logo.svg` by id so the topbar uses the same source as the main logo -->
-      <svg class="topbar-logo-svg topbar-logo" viewBox="480 360 480 480" role="img" aria-label="MythOS small gear (from logo.svg)">
+      <svg class="topbar-logo-svg topbar-logo" viewBox="0 0 1440 1440" role="img" aria-label="MythOS small gear (from logo.svg)">
         <title>MythOS topbar gear (from logo.svg)</title>
-        <g transform="translate(-480 -360) scale(0.5)" aria-hidden="false">
-            <!-- controller (static) and gear (rotating) sourced from the canonical logo.svg -->
-            <g class="controller">
-              <use href="assets/images/logo.svg#img2" x="630" y="542" width="1440" height="1440"/>
-            </g>
-            <g class="rotor">
-              <use href="assets/images/logo.svg#img3" x="549" y="441" width="1440" height="1440"/>
-            </g>
+        <!-- controller (static) and gear (rotating) sourced from the canonical logo.svg -->
+        <g class="controller">
+          <use href="assets/images/logo.svg#img2" x="630" y="542" width="1440" height="1440"/>
+        </g>
+        <g class="rotor">
+          <use href="assets/images/logo.svg#img3" x="549" y="441" width="1440" height="1440"/>
         </g>
       </svg>
     </div>
