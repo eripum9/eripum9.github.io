@@ -7,15 +7,16 @@
 .site-header > div{display:none}
 .site-topbar{background:linear-gradient(0deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02));padding:8px 16px;border-bottom:1px solid rgba(255,255,255,0.03)}
 .site-topbar .topbar-inner{max-width:960px;margin:0 auto;display:flex;align-items:center}
-/* smaller topbar logo (left corner) */
-.topbar-logo{width:28px;height:28px;flex:0 0 auto;object-fit:contain}
+/* slightly larger topbar logo so controller + gear read clearly */
+.topbar-logo{width:36px;height:36px;flex:0 0 auto;object-fit:contain}
 /* ensure the small logo never grows larger than its container */
-.topbar-logo{max-width:28px;max-height:28px}
+.topbar-logo{max-width:36px;max-height:36px}
 
 /* Animate the topbar small logo via CSS when the SVG's internal animation doesn't run (e.g. loaded via <img>) */
 @keyframes topbar-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 .topbar-logo{display:inline-block;animation:topbar-spin 6s linear infinite;transform-origin:center center}
-/* rotor animation for inlined topbar SVG */
+/* controller (static) and rotor (rotating) styling for the combined icon */
+.controller{opacity:1;fill:currentColor}
 .rotor{transform-origin:50% 50%;animation:topbar-spin 6s linear infinite}
 @keyframes topbar-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion: reduce){.rotor{animation:none}}
