@@ -19,3 +19,19 @@ document.addEventListener('visibilitychange', function(){
 });
 // Ensure attribute state is correct on load
 if(document.hidden) document.documentElement.setAttribute('data-page-hidden','true');
+
+// Toggle rotation on the topbar logo. Keeps logosmall.svg untouched.
+function updateTopbarRotation(){
+  const img=document.querySelector('.topbar-logo');
+  if(!img) return;
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const hidden = document.hidden;
+  if(!prefersReduced && !hidden){
+    img.classList.add('rotating');
+  } else {
+    img.classList.remove('rotating');
+  }
+}
+document.addEventListener('DOMContentLoaded', updateTopbarRotation);
+document.addEventListener('visibilitychange', updateTopbarRotation);
+window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', updateTopbarRotation);

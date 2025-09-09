@@ -15,13 +15,17 @@
 
 /* Animate the topbar small logo via CSS when the SVG's internal animation doesn't run (e.g. loaded via <img>) */
 @keyframes topbar-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-.topbar-logo{display:inline-block;animation:topbar-spin 6s linear infinite;transform-origin:center center;transform:scale(1.12)}
+.topbar-logo{display:inline-block;transform-origin:center center;transform:scale(1.12)}
+/* only rotate when the .rotating class is present so we can control it from JS */
+.topbar-logo.rotating{animation:topbar-spin 6s linear infinite}
+/* pause when the page is hidden (JS toggles [data-page-hidden]) */
+[data-page-hidden] .topbar-logo.rotating{animation-play-state:paused}
 /* controller (static) and rotor (rotating) styling for the combined icon */
 .controller{opacity:1;fill:currentColor}
 .rotor{transform-origin:50% 50%;animation:topbar-spin 6s linear infinite}
 @keyframes topbar-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion: reduce){.rotor{animation:none}}
-@media (prefers-reduced-motion: reduce){ .topbar-logo{animation:none} }
+@media (prefers-reduced-motion: reduce){ .topbar-logo.rotating{animation:none} }
 .hero-logo{display:flex;justify-content:center;margin:8px 0 22px}
 /* balanced hero size: large but not oversized */
 /* hero logo: prefer object if available, otherwise any img inside will size by rules */
