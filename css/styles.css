@@ -20,9 +20,13 @@
 .topbar-logo.rotating{animation:topbar-spin 6s linear infinite}
 /* pause when the page is hidden (JS toggles [data-page-hidden]) */
 [data-page-hidden] .topbar-logo.rotating{animation-play-state:paused}
+/* pause when hovering over the topbar logo */
+.topbar-logo.rotating:hover{animation-play-state:paused}
 /* controller (static) and rotor (rotating) styling for the combined icon */
 .controller{opacity:1;fill:currentColor}
 .rotor{transform-origin:50% 50%;animation:topbar-spin 6s linear infinite}
+/* pause rotor animation when hovering over the hero logo */
+.hero-logo:hover .rotor{animation-play-state:paused}
 @keyframes topbar-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion: reduce){.rotor{animation:none}}
 @media (prefers-reduced-motion: reduce){ .topbar-logo.rotating{animation:none} }

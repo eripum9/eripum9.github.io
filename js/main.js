@@ -7,6 +7,12 @@ document.addEventListener('DOMContentLoaded',()=>{
       alert('This link points to local repo files. Clone the repo and run locally to use it.');
     }
   })})
+  
+  // Add rotating class to topbar logo to start animation
+  const topbarLogo = document.querySelector('.topbar-logo');
+  if(topbarLogo) {
+    topbarLogo.classList.add('rotating');
+  }
 });
 
 // Pause rotor when page is hidden (copied from logo.svg script)
