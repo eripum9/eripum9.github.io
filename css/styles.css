@@ -1,5 +1,4 @@
 :root{--bg:#141d24;--card:#0f1418;--accent:#6ee7b7;--muted:#94a3b8;--text:#e6eef6;--topbar-height:48px}
-:root{--bg:#141d24}
 *{box-sizing:border-box}body{font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:0}
 .container{max-width:960px;margin:28px auto;padding:24px}
 .site-header{display:flex;align-items:center;gap:16px;padding:12px 24px;background:rgba(255,255,255,0.02);border-bottom:0.5px solid rgba(255,255,255,0.03)}
@@ -23,9 +22,7 @@
 /* controller (static) and rotor (rotating) styling for the combined icon */
 .controller{opacity:1;fill:currentColor}
 .rotor{transform-origin:50% 50%;animation:topbar-spin 6s linear infinite}
-@keyframes topbar-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-@media (prefers-reduced-motion: reduce){.rotor{animation:none}}
-@media (prefers-reduced-motion: reduce){ .topbar-logo.rotating{animation:none} }
+@media (prefers-reduced-motion: reduce){.rotor{animation:none} .topbar-logo.rotating{animation:none}}
 .hero-logo{display:flex;justify-content:center;margin:8px 0 22px}
 /* balanced hero size: large but not oversized */
 /* hero logo: prefer object if available, otherwise any img inside will size by rules */

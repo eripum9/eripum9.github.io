@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded',()=>{
   const links=document.querySelectorAll('a.btn');
+  if(links.length===0)return;
   links.forEach(a=>{a.addEventListener('click',e=>{
     const href=a.getAttribute('href');
     if(href && href.startsWith('../')){
@@ -11,7 +12,8 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 // Pause rotor when page is hidden (copied from logo.svg script)
 document.addEventListener('visibilitychange', function(){
-  if(document.hidden){
+  const isHidden=document.hidden;
+  if(isHidden){
     document.documentElement.setAttribute('data-page-hidden','true');
   } else {
     document.documentElement.removeAttribute('data-page-hidden');
