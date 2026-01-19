@@ -1,12 +1,13 @@
-:root{--bg:#141d24;--card:#0f1418;--accent:#6ee7b7;--muted:#94a3b8;--text:#e6eef6;--topbar-height:48px}
-*{box-sizing:border-box}body{font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:0}
+:root{--bg:#ffffff;--text:#0b1220;--muted:#6b7280;--accent:#6ee7b7;--card:#f8fafc;--shadow:0 6px 18px rgba(2,6,23,0.08);--topbar-height:48px}
+[data-theme="dark"]{--bg:#141d24;--text:#e6eef6;--muted:#94a3b8;--accent:#6ee7b7;--card:#0f1418;--shadow:0 6px 18px rgba(2,6,23,0.6)}
+*{box-sizing:border-box}body{font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:0;transition:background .22s ease,color .22s ease}
 .container{max-width:960px;margin:28px auto;padding:24px}
 .site-header{display:flex;align-items:center;gap:16px;padding:12px 24px;background:rgba(255,255,255,0.02);border-bottom:0.5px solid rgba(255,255,255,0.03)}
 .logo{width:48px;height:48px}
 .site-header > div{display:none}
 /* topbar uses a dedicated height variable so the border and layout have a stable height */
 .site-topbar{background:linear-gradient(0deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02));padding:0 16px;height:var(--topbar-height);border-bottom:0.5px solid rgba(255,255,255,0.03);display:flex;align-items:center}
-.site-topbar .topbar-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;height:var(--topbar-height);box-sizing:border-box}
+.site-topbar .topbar-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:var(--topbar-height);box-sizing:border-box;gap:16px}
 /* slightly larger topbar logo so controller + gear read clearly
 	- use a CSS height slightly smaller than the bar to preserve border spacing
 	- apply a modest scale if the SVG content has internal padding */
@@ -23,6 +24,12 @@
 .controller{opacity:1;fill:currentColor}
 .rotor{transform-origin:50% 50%;animation:topbar-spin 6s linear infinite}
 @media (prefers-reduced-motion: reduce){.rotor{animation:none} .topbar-logo.rotating{animation:none}}
+.theme-toggle{border:0;background:var(--card);padding:.35rem;border-radius:10px;display:inline-flex;align-items:center;gap:.4rem;cursor:pointer;box-shadow:var(--shadow);transition:transform .12s ease,background .12s ease}
+.theme-toggle:active{transform:scale(.98)}
+.theme-toggle .icon{width:18px;height:18px}
+.theme-toggle .moon{display:none}
+[data-theme="dark"] .theme-toggle .sun{display:none}
+[data-theme="dark"] .theme-toggle .moon{display:inline-block;filter:invert(1) brightness(2)}
 .hero-logo{display:flex;justify-content:center;margin:8px 0 22px}
 /* balanced hero size: large but not oversized */
 /* hero logo: prefer object if available, otherwise any img inside will size by rules */
@@ -35,10 +42,12 @@
 /* .hero-inline-logo { ... } */
 h1{margin:0;font-size:1.6rem}
 .tagline{margin:0;color:var(--muted)}
-.hero{margin-top:0;padding:22px;background:linear-gradient(rgba(255,255,255,0.02), rgba(255,255,255,0.02));border-radius:8px}
+.hero{margin-top:0;padding:22px;background:var(--card);border-radius:8px;box-shadow:var(--shadow);transition:background .22s ease;animation:fadeInUp .42s ease both}
 .buttons{display:flex;gap:12px;margin-top:12px}
-.btn{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);padding:10px 14px;border-radius:6px;text-decoration:none}
+.btn{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);padding:10px 14px;border-radius:6px;text-decoration:none;transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
 .btn.primary{background:var(--accent);color:#04201a;border:none}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.btn:hover{transform:translateY(-2px)}
 .note{color:var(--muted);font-size:.9rem}
 .about,.help,.contact{margin-top:18px;padding:18px;background:rgba(255,255,255,0.01);border-radius:8px}
 .site-footer{padding:16px;text-align:center;color:var(--muted)}
