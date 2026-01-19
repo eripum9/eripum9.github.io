@@ -29,8 +29,7 @@
 .theme-toggle .icon{width:18px;height:18px}
 .theme-toggle .moon{display:none}
 [data-theme="dark"] .theme-toggle .sun{display:none}
-[data-theme="dark"] .theme-toggle .moon{display:inline-block}
-[data-theme="dark"] .theme-toggle .moon{filter:invert(1) brightness(2)}
+[data-theme="dark"] .theme-toggle .moon{display:inline-block;filter:invert(1) brightness(2)}
 .hero-logo{display:flex;justify-content:center;margin:8px 0 22px}
 /* balanced hero size: large but not oversized */
 /* hero logo: prefer object if available, otherwise any img inside will size by rules */

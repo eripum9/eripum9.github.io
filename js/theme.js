@@ -15,8 +15,8 @@
   
   const stored = localStorage.getItem(key);
   const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  // Default to dark if no preference stored
-  applyTheme(stored || (prefersDark ? 'dark' : 'dark'));
+  // Respect prefers-color-scheme, but default to dark if no preference
+  applyTheme(stored || (prefersDark ? 'dark' : 'light'));
   
   if(toggle){
     toggle.addEventListener('click', ()=>{
