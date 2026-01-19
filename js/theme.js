@@ -15,7 +15,7 @@
   
   const stored = localStorage.getItem(key);
   const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  // Respect prefers-color-scheme, but default to dark if no preference
+  // Respect prefers-color-scheme for first-time visitors
   applyTheme(stored || (prefersDark ? 'dark' : 'light'));
   
   if(toggle){

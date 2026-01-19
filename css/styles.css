@@ -42,13 +42,11 @@
 /* .hero-inline-logo { ... } */
 h1{margin:0;font-size:1.6rem}
 .tagline{margin:0;color:var(--muted)}
-.hero{margin-top:0;padding:22px;background:var(--card);border-radius:8px;box-shadow:var(--shadow);transition:background .22s ease}
+.hero{margin-top:0;padding:22px;background:var(--card);border-radius:8px;box-shadow:var(--shadow);transition:background .22s ease;animation:fadeInUp .42s ease both}
 .buttons{display:flex;gap:12px;margin-top:12px}
-.btn{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);padding:10px 14px;border-radius:6px;text-decoration:none}
+.btn{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);padding:10px 14px;border-radius:6px;text-decoration:none;transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
 .btn.primary{background:var(--accent);color:#04201a;border:none}
 @keyframes fadeInUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.hero{animation:fadeInUp .42s ease both}
-.btn{transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
 .btn:hover{transform:translateY(-2px)}
 .note{color:var(--muted);font-size:.9rem}
 .about,.help,.contact{margin-top:18px;padding:18px;background:rgba(255,255,255,0.01);border-radius:8px}
