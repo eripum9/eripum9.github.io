@@ -3,40 +3,89 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>My Projects — Under Construction</title>
+  <title>MythOS — Projects</title>
+  <meta name="description" content="MythOS project hub — games, tools, and experiments built with Pygame and beyond." />
   <link rel="stylesheet" href="css/styles.css" />
+  <!-- Preload the logo so there's no flash -->
+  <link rel="preload" href="assets/images/logo.svg" as="image" type="image/svg+xml" />
 </head>
 <body>
+  <!--
+    ╔══════════════════════════════════════════════════════════════╗
+    ║  SYSTEM LOG 0x4D59 — [ARCHIVED]                            ║
+    ║  Date: 2024-11-03T02:17:44Z                                ║
+    ║  Note: Initial deployment nominal. All subsystems green.   ║
+    ║  ...                                                       ║
+    ║  Date: 2025-01-09T14:33:07Z                                ║
+    ║  Note: Network handshake detected. Unscheduled.            ║
+    ║        "It learned faster than expected."                   ║
+    ║  ...                                                       ║
+    ║  Date: 2025-03-22T??:??:??Z                                ║
+    ║  Note: ████████████ ██ ████ ███████ ██████                 ║
+    ║        "Don't worry. I'm just helping."                    ║
+    ║  ...                                                       ║
+    ║  Date: 2026-02-22T00:00:00Z                                ║
+    ║  Note: "There's a crack in the page. Can you see it?"      ║
+    ╚══════════════════════════════════════════════════════════════╝
+  -->
+
+  <!-- Scanline overlay — controlled by JS glitch system -->
+  <div class="scanline-overlay" id="scanline" aria-hidden="true"></div>
 
   <header class="site-topbar">
     <div class="topbar-inner">
-      <!-- inline the small logo SVG so it reliably renders and animates in previews and all browsers -->
-      <!-- reference the gear inside the full `logo.svg` by id so the topbar uses the same source as the main logo -->
-  <!-- use the edited logosmall.svg so the visible icon fills the topbar height -->
-  <img src="assets/images/logosmall.svg" class="topbar-logo" alt="MythOS small logo" aria-hidden="false" />
+      <img src="assets/images/logosmall.svg" class="topbar-logo" alt="MythOS logo" />
+      <nav class="topbar-nav" aria-label="Main navigation">
+        <span class="active">Home</span>
+      </nav>
     </div>
   </header>
 
-
   <main class="container">
-    <!-- Logo sits above the message box so it's not contained inside the message -->
+    <!-- Logo sits above the message box -->
     <div class="hero-logo">
-        <object type="image/svg+xml" data="assets/images/logo.svg" aria-label="MythOS logo large">
-          <img src="assets/images/logo.svg" alt="MythOS logo" />
-        </object>
+      <object type="image/svg+xml" data="assets/images/logo.svg" aria-label="MythOS logo">
+        <img src="assets/images/logo.svg" alt="MythOS logo" />
+      </object>
     </div>
+
     <section class="hero">
-      <h2>My Projects</h2>
-      <p>This website is currently under construction. Thanks for your patience — content will be available soon.</p>
-      <!-- Featured subsite link removed until approved -->
+      <h2 class="glitch-split" data-text="MythOS Projects">MythOS Projects</h2>
+      <p>Welcome to the project hub. Games, tools, and experiments built with Pygame and beyond.</p>
+      <div class="buttons">
+        <a class="btn primary" href="https://github.com/eripum9" target="_blank" rel="noopener">Check out my other stuff on GitHub</a>
+      </div>
+    </section>
+
+    <!-- The Void Crack — hidden for 10s, then the page tears open -->
+    <div class="page-crack" id="page-crack" aria-hidden="true">
+      <a href="mythos-across-the-web/" class="crack-link" id="crack-link" tabindex="-1">
+        <span class="crack-smiley">=)</span>
+      </a>
+    </div>
+
+    <section class="projects-grid" aria-label="Projects">
+      <!-- This card is corrupted — no link, just glitch boxes and shaking -->
+      <article class="project-card corrupted-block">
+        <div class="corruption-box-layer" aria-hidden="true">
+          <div class="c-box c-box-1"></div>
+          <div class="c-box c-box-2"></div>
+          <div class="c-box c-box-3"></div>
+          <div class="c-box c-box-4"></div>
+          <div class="c-box c-box-5"></div>
+        </div>
+        <h3 class="glitch-split" data-text="MythOS: Across the Web">MythOS: Across the Web</h3>
+        <p>A horror game where a helpful AI gains network access and starts corrupting other games. What begins as assistance slowly turns into something else entirely.</p>
+        <span class="card-tag">Pygame</span>
+      </article>
+
     </section>
   </main>
 
   <footer class="site-footer">
-    <small>© Pygame Project — site under construction</small>
+    <small>&copy; 2026 PumpgunStudios</small>
   </footer>
 
   <script src="js/main.js"></script>
-  <!-- removed visibility propagation script so SVG animations are not paused when the page is hidden or touched -->
 </body>
 </html>
