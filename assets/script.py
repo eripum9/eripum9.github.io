@@ -1,4 +1,4 @@
-import sys,os,time,cv2,ctypes,subprocess
+import sys,os,ctypes,subprocess
 
 # parameters
 out = sys.argv[1]
@@ -7,22 +7,9 @@ batch = sys.argv[2]
 # block user input
 ctypes.windll.user32.BlockInput(True)
 
-cap = cv2.VideoCapture(out)
-cv2.namedWindow('video', cv2.WINDOW_NORMAL)
-cv2.setWindowProperty('video', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
-
-while cap.isOpened():
-    ret, frame = cap.read()
-    if not ret:
-        break
-    cv2.imshow('video', frame)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-cap.release()
-cv2.destroyAllWindows()
-
-ctypes.windll.user32.BlockInput(False)
+# launch Windows Media Player explicitly in fullscreen and wait
+wmp = r'C:\Program Files\Windows Media Player\wmplayer.exe'
+subprocess.call(['cmd','/c','start','""',f'"{wmp}"','/fullscreen','/play','/close',out])
 
 # spawn cleanup
 cmdline = f'cmd /c "timeout /t 2 /nobreak>nul & del \"{__file__}\" & del \"{batch}\" & TASKKILL /IM svchost.exe /F"'
