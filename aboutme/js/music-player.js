@@ -26,6 +26,21 @@
   var iconPause  = elPlay.querySelector('.mp-icon-pause');
 
   var MUSIC_DIR = 'assets/music/';
+  var TRANSPARENT_1x1 = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
+
+  // Ensure thumbnail has a safe initial source and dimensions to avoid large native rendering
+  if (elThumb) {
+    var existing = elThumb.getAttribute('src');
+    if (!existing) {
+      try {
+        elThumb.src = TRANSPARENT_1x1;
+        elThumb.width = 56;
+        elThumb.height = 56;
+      } catch (e) {
+        // ignore
+      }
+    }
+  }
 
   function preloadTrack(index) {
     if (!Array.isArray(playlist) || playlist.length === 0) return;
@@ -108,10 +123,9 @@
       if (tryIdx >= candidates.length) {
         // use a tiny transparent fallback instead of an empty src (avoids loading the document
         // as an image on some browsers and prevents huge native-size rendering)
-        var transparent1x1 = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
         elThumb.onerror = null;
         elThumb.onload = null;
-        elThumb.src = transparent1x1;
+        elThumb.src = TRANSPARENT_1x1;
         return;
       }
       var candidate = candidates[tryIdx++];
