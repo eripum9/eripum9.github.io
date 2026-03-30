@@ -1,5 +1,3 @@
-/* MythOS — Main Script */
-
 (function () {
   'use strict';
 
