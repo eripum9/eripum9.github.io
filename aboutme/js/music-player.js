@@ -106,9 +106,12 @@
     var tryIdx = 0;
     function tryThumb() {
       if (tryIdx >= candidates.length) {
-        elThumb.src = '';
+        // use a tiny transparent fallback instead of an empty src (avoids loading the document
+        // as an image on some browsers and prevents huge native-size rendering)
+        var transparent1x1 = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
         elThumb.onerror = null;
         elThumb.onload = null;
+        elThumb.src = transparent1x1;
         return;
       }
       var candidate = candidates[tryIdx++];
