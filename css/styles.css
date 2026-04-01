@@ -280,6 +280,14 @@ h3 { margin: 0 0 var(--space-xs); font-size: 1.1rem; font-weight: 600; }
   padding: 2px 8px;
   border-radius: 999px;
   margin-top: var(--space-sm);
+  margin-right: 4px;
+}
+
+.card-link-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  text-decoration: none;
 }
 
 /* === Buttons === */

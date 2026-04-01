@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Enable Amazon Music Notifications</title>
+  <meta name="description" content="How to enable notifications in Amazon Music for Notification Enrichment." />
+  <link rel="stylesheet" href="../../css/styles.css" />
+  <style>
+    .page-content {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: var(--space-xl) var(--space-lg) var(--space-2xl);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      margin-bottom: var(--space-lg);
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .back-link svg { width: 16px; height: 16px; }
+
+    .page-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: var(--space-xs);
+      background: linear-gradient(135deg, var(--text), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-subtitle {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: var(--space-xl);
+      line-height: 1.6;
+    }
+
+    .note-box {
+      background: rgba(110, 231, 183, 0.06);
+      border: 1px solid rgba(110, 231, 183, 0.12);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      margin-bottom: var(--space-xl);
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    .note-box strong { color: var(--accent); }
+
+    .step-card {
+      background: var(--bg-surface);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-lg);
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #04201a;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+    }
+
+    .step-card h2 {
+      font-size: 1.05rem;
+      margin-bottom: var(--space-sm);
+      color: var(--text);
+    }
+
+    .step-card p {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: var(--space-md);
+    }
+
+    .step-img {
+      width: 100%;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .done-box {
+      background: rgba(110, 231, 183, 0.08);
+      border: 1px solid rgba(110, 231, 183, 0.15);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      text-align: center;
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-topbar">
+    <div class="topbar-inner">
+      <img src="../../assets/images/logosmall.svg" class="topbar-logo" alt="logo" />
+      <nav class="topbar-nav" aria-label="Main navigation">
+        <a href="/">Home</a>
+        <a href="/aboutme/">About Me</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-content">
+    <a href="../" class="back-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      Back to Amazon Music RPC
+    </a>
+
+    <h1 class="page-title">Enable Notifications</h1>
+    <p class="page-subtitle">Notification Enrichment reads track info from Amazon Music's Windows notifications. For this to work, notifications must be enabled in the Amazon Music app.</p>
+
+    <div class="note-box">
+      <strong>Note:</strong> Amazon Music only sends notifications when the app is minimized or not in focus. Keep it minimized to the taskbar for best results.
+    </div>
+
+    <div class="step-card">
+      <div class="step-number">1</div>
+      <h2>Open Settings</h2>
+      <p>In the Amazon Music app, click your <strong style="color: var(--text);">profile icon</strong> in the top-right corner, then select <strong style="color: var(--text);">Settings</strong>.</p>
+      <img src="images/step1_settings.png" alt="Amazon Music — open Settings via profile icon" class="step-img" />
+    </div>
+
+    <div class="step-card">
+      <div class="step-number">2</div>
+      <h2>Enable Notifications</h2>
+      <p>Scroll down until you see <strong style="color: var(--text);">"Show notifications for track playing"</strong> and make sure the toggle is <strong style="color: var(--accent);">enabled</strong>.</p>
+      <img src="images/step2_notifications.png" alt="Amazon Music — enable track notifications toggle" class="step-img" />
+    </div>
+
+    <div class="done-box">
+      &#x2705; That's it! Notification Enrichment will now pick up full track metadata automatically.
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <small>&copy; 2026 PumpgunStudios</small>
+  </footer>
+</body>
+</html>
