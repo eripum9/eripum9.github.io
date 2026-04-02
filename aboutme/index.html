@@ -218,10 +218,114 @@
       font-size: 0.75rem;
     }
 
+    .view-counter {
+      opacity: 0.7;
+      transition: opacity 0.3s;
+    }
+    .view-counter:hover { opacity: 1; }
+    .view-counter img { border-radius: 4px; }
+
+    /* --- Dim overlay --- */
+    .mp-dim {
+      position: fixed;
+      inset: 0;
+      z-index: 8999;
+      background: rgba(0,0,0,0.6);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    .mp-dim.active {
+      opacity: 1;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+
+    /* --- Tooltip --- */
+    .mp-tooltip {
+      position: fixed;
+      bottom: 110px;
+      right: 20px;
+      z-index: 9001;
+      background: rgba(21,29,37,0.96);
+      border: 1px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 14px 20px;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 500;
+      line-height: 1.5;
+      max-width: 280px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 0 20px var(--accent-glow);
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(8px);
+      animation: tooltipIn 0.5s 1.2s ease-out forwards, tooltipBob 2s 1.7s ease-in-out 3;
+      pointer-events: auto;
+    }
+    .mp-tooltip::after {
+      content: '';
+      position: absolute;
+      bottom: -7px;
+      right: 28px;
+      width: 12px;
+      height: 12px;
+      background: rgba(21,29,37,0.96);
+      border-right: 1px solid var(--accent);
+      border-bottom: 1px solid var(--accent);
+      transform: rotate(45deg);
+    }
+    .mp-tooltip .tooltip-icon {
+      margin-right: 8px;
+      font-size: 1.1rem;
+    }
+    .mp-tooltip.hide {
+      animation: tooltipOut 0.3s ease-in forwards;
+    }
+
+    /* --- PC: scale up player while tooltip visible --- */
+    .music-player.highlight {
+      transform: scale(1.08);
+      box-shadow: 0 12px 48px rgba(0,0,0,0.5), 0 0 24px var(--accent-glow), 0 0 0 2px var(--accent);
+      z-index: 9000;
+    }
+
+    @keyframes tooltipIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes tooltipBob {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-4px); }
+    }
+    @keyframes tooltipOut {
+      from { opacity: 1; transform: translateY(0); }
+      to   { opacity: 0; transform: translateY(8px); }
+    }
+
     @media (max-width: 480px) {
       .page { padding: 32px 16px 32px; }
       .avatar-ring { width: 80px; height: 80px; }
       .profile-name { font-size: 1.2rem; }
+      .mp-tooltip {
+        right: 10px;
+        left: 10px;
+        bottom: 75px;
+        max-width: none;
+        text-align: center;
+        font-size: 0.85rem;
+        padding: 10px 16px;
+      }
+      .mp-tooltip::after {
+        right: calc(50% - 6px);
+      }
+      /* On mobile, don't scale the player — it's already obvious */
+      .music-player.highlight {
+        transform: none;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(110,231,183,0.05);
+      }
     }
   </style>
 </head>
@@ -233,7 +337,7 @@
     </a>
 
     <div class="avatar-ring">
-      <img src="../assets/images/avatar.png" alt="Avatar" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%231a1d23%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2258%22 text-anchor=%22middle%22 fill=%22%236ee7b7%22 font-size=%2240%22>:3</text></svg>'" />
+      <img id="avatar-img" src="../assets/images/avatar.png" alt="Avatar" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%231a1d23%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2258%22 text-anchor=%22middle%22 fill=%22%236ee7b7%22 font-size=%2240%22>:3</text></svg>'" />
     </div>
 
     <h1 class="profile-name">PumpgunYT</h1>
@@ -287,9 +391,19 @@
       </a>
     </div>
 
+    <div class="view-counter">
+      <img src="https://api.visitorbadge.io/api/visitors?path=eripum9.github.io-aboutme&label=Views&countColor=%23263238&labelColor=%231a1d23&style=flat-square" alt="View count" />
+    </div>
+
     <small class="about-footer">&copy; 2026 PumpgunStudios</small>
   </div>
   
+  <div class="mp-dim" id="mp-dim"></div>
+
+  <div class="mp-tooltip" id="mp-tooltip" role="status">
+    <span class="tooltip-icon">&#127925;</span>here you can listen to my favourite songs!
+  </div>
+
   <div id="music-player" class="music-player">
     <div class="mp-inner">
       <img class="mp-thumb" id="mp-thumb" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" width="56" height="56" alt="Album art" />
@@ -319,5 +433,44 @@
   </div>
   
   <script src="js/music-player.js"></script>
+  <script>
+    fetch('https://api.lanyard.rest/v1/users/819569259759796275')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (!data.success) return;
+        var u = data.data.discord_user;
+        var url = u.avatar
+          ? 'https://cdn.discordapp.com/avatars/' + u.id + '/' + u.avatar + '.png?size=256'
+          : 'https://cdn.discordapp.com/embed/avatars/' + (Number(u.id) >> 22) % 6 + '.png';
+        var img = document.getElementById('avatar-img');
+        if (img) img.src = url;
+      })
+      .catch(function() {});
+  </script>
+  <script>
+    (function() {
+      var tip = document.getElementById('mp-tooltip');
+      var dim = document.getElementById('mp-dim');
+      var player = document.getElementById('music-player');
+      if (!tip) return;
+
+      // Show dim + highlight after tooltip appears (matches 1.2s animation-delay)
+      setTimeout(function() {
+        if (dim) dim.classList.add('active');
+        if (player) player.classList.add('highlight');
+      }, 1200);
+
+      function dismiss() {
+        tip.classList.add('hide');
+        if (dim) dim.classList.remove('active');
+        if (player) player.classList.remove('highlight');
+        tip.addEventListener('animationend', function() { tip.remove(); }, { once: true });
+      }
+
+      tip.addEventListener('click', dismiss);
+      if (dim) dim.addEventListener('click', dismiss);
+      setTimeout(dismiss, 9000);
+    })();
+  </script>
 </body>
 </html>
