@@ -119,6 +119,8 @@
     }
     tryThumb();
 
+    updateMediaSession(track);
+
     if (autoplay) {
       audio.play().catch(function () {});
       setPlaying(true);
@@ -133,7 +135,87 @@
     isPlaying = state;
     if (iconPlay) iconPlay.style.display = state ? 'none' : '';
     if (iconPause) iconPause.style.display = state ? '' : 'none';
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.playbackState = state ? 'playing' : 'paused';
+    }
   }
+
+  function mimeFromExt(filename) {
+    var ext = (filename.match(/\.([^.]+)$/) || [])[1];
+    if (ext) ext = ext.toLowerCase();
+    if (ext === 'png') return 'image/png';
+    if (ext === 'webp') return 'image/webp';
+    if (ext === 'gif') return 'image/gif';
+    return 'image/jpeg';
+  }
+
+  function updateMediaSession(track) {
+    if (!('mediaSession' in navigator)) return;
+    var baseName = track.file.replace(/\.[^.]+$/, '');
+    var thumbFile = track.thumbnail || baseName + '.jpg';
+    var thumbSrc = /^(?:https?:|\/)/.test(thumbFile) ? thumbFile : MUSIC_DIR + thumbFile;
+    var artworkUrl = new URL(thumbSrc, window.location.href).href;
+
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: track.title || 'Unknown',
+      artist: track.artist || '',
+      artwork: [
+        { src: artworkUrl, sizes: '512x512', type: mimeFromExt(thumbFile) }
+      ]
+    });
+  }
+
+  function setupMediaSessionHandlers() {
+    if (!('mediaSession' in navigator)) return;
+
+    navigator.mediaSession.setActionHandler('play', function () {
+      if (!Array.isArray(playlist) || playlist.length === 0) return;
+      if (currentIndex < 0) { loadTrack(0, true); return; }
+      audio.play().catch(function () {});
+      setPlaying(true);
+    });
+
+    navigator.mediaSession.setActionHandler('pause', function () {
+      audio.pause();
+      setPlaying(false);
+    });
+
+    navigator.mediaSession.setActionHandler('previoustrack', function () {
+      if (!Array.isArray(playlist) || playlist.length === 0) return;
+      if (audio.currentTime > 3) {
+        audio.currentTime = 0;
+      } else {
+        var prev = (currentIndex - 1 + playlist.length) % playlist.length;
+        loadTrack(prev, true);
+      }
+    });
+
+    navigator.mediaSession.setActionHandler('nexttrack', function () {
+      if (!Array.isArray(playlist) || playlist.length === 0) return;
+      var next = (currentIndex + 1) % playlist.length;
+      loadTrack(next, true);
+    });
+
+    navigator.mediaSession.setActionHandler('stop', function () {
+      audio.pause();
+      audio.currentTime = 0;
+      setPlaying(false);
+      if (elProgress) elProgress.style.width = '0%';
+    });
+
+    try {
+      navigator.mediaSession.setActionHandler('seekto', function (details) {
+        if (!audio.duration) return;
+        if (details.fastSeek && 'fastSeek' in audio) {
+          audio.fastSeek(details.seekTime);
+        } else {
+          audio.currentTime = details.seekTime;
+        }
+      });
+    } catch (e) {}
+  }
+
+  setupMediaSessionHandlers();
 
   if (elPlay) {
     elPlay.addEventListener('click', function () {
@@ -180,9 +262,20 @@
     });
   }
 
+  var hasPositionState = 'mediaSession' in navigator && 'setPositionState' in navigator.mediaSession;
+
   audio.addEventListener('timeupdate', function () {
     if (audio.duration && elProgress) {
       elProgress.style.width = (audio.currentTime / audio.duration * 100) + '%';
+    }
+    if (hasPositionState && audio.duration) {
+      try {
+        navigator.mediaSession.setPositionState({
+          duration: audio.duration,
+          playbackRate: audio.playbackRate,
+          position: audio.currentTime
+        });
+      } catch (e) {}
     }
   });
 
