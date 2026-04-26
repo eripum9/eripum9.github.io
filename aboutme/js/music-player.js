@@ -62,7 +62,8 @@
 
         if (playlist.length > 0 && elPlayer) {
           elPlayer.style.display = '';
-          loadTrack(0, false);
+          var randomStartIndex = Math.floor(Math.random() * playlist.length);
+          loadTrack(randomStartIndex, false);
         } else if (elPlayer) {
           elPlayer.style.display = 'none';
         }
