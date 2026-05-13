@@ -208,7 +208,7 @@
     </a>
 
     <h1 class="page-title">Amazon Music RPC</h1>
-    <p class="page-subtitle">Discord Rich Presence for Amazon Music on Windows. Shows what you're listening to — including track name, artist, album art, and a live progress bar — directly on your Discord profile.</p>
+    <p class="page-subtitle">Discord Rich Presence for Amazon Music on Windows. Shows what you're listening to — including track name, artist, album art, and a live timer — directly on your Discord profile.</p>
 
     <div class="badge-row">
       <img src="https://img.shields.io/badge/platform-Windows%2010%2F11-blue" alt="Windows" />
@@ -241,15 +241,18 @@
       <h2>Features</h2>
       <ul class="feature-list">
         <li><strong>Live track display</strong> — title, artist, album name, and progress bar with elapsed/total time</li>
-        <li><strong>Album art</strong> — fetched automatically from Deezer (primary) and iTunes (fallback)</li>
-        <li><strong>Notification enrichment</strong> — reads full artist and album info from Windows notifications for more accurate metadata</li>
+        <li><strong>Album art</strong> — uses Amazon Music artwork first, with external artwork lookup as fallback</li>
+        <li><strong>Fallback metadata</strong> — uses SMTC and Windows notifications only when enhanced Amazon metadata is unavailable</li>
         <li><strong>Pause state</strong> — keeps your presence visible when paused, with a frozen progress bar and pause icon</li>
         <li><strong>Last.fm scrobbling</strong> — authenticate with one click and scrobble tracks automatically</li>
         <li><strong>ListenBrainz scrobbling</strong> — paste your user token, validate it in Settings, and scrobble tracks</li>
-        <li><strong>Listen on Deezer button</strong> — adds a clickable link on your Discord presence (toggleable)</li>
+        <li><strong>Listen button</strong> — adds an Amazon Music link by default, with Deezer as an optional source</li>
+        <li><strong>Privacy controls</strong> — private session mode and keyword filters for tracks you do not want to share</li>
+        <li><strong>Diagnostics window</strong> — overview health checks, development tests, log history, and live console output in one resizable window</li>
+        <li><strong>Report issue shortcut</strong> — opens the GitHub issue page from Settings or Diagnostics</li>
         <li><strong>Auto-updater</strong> — checks for updates on startup and via the Settings window</li>
         <li><strong>System tray app</strong> — runs quietly in the background</li>
-        <li><strong>Modern settings UI</strong> — dark theme with WebView2 (Edge), Windows 11 style</li>
+        <li><strong>Modern settings UI</strong> — dark theme with WebView2 (Edge), Windows 11 style, with saved window sizing</li>
         <li><strong>Start on Windows startup</strong> — optional, launches minimized to tray</li>
         <li><strong>Custom Discord Application ID</strong> — use your own if you want custom assets</li>
       </ul>
@@ -258,10 +261,10 @@
     <div class="content-card">
       <h2>How It Works</h2>
       <p style="color: var(--text-dim); font-size: 0.9rem; line-height: 1.7;">
-        Amazon Music exposes currently playing media through Windows' System Media Transport Controls (SMTC). This app reads that data and sends it to Discord via Rich Presence IPC.
+        Amazon Music metadata is read from the local Amazon Music desktop app when enhanced metadata is enabled. This provides the current title, artist, album, artwork, playback state, and progress timing for Discord Rich Presence.
       </p>
       <p style="color: var(--text-dim); font-size: 0.9rem; line-height: 1.7; margin-top: 12px;">
-        Optionally, notification enrichment can be enabled to read full track metadata (artist + album) from Amazon Music's Windows notifications, which provides richer data than SMTC alone. This requires Amazon Music notifications to be enabled and the app to be minimized.
+        If enhanced Amazon metadata is unavailable, the app falls back to Windows' System Media Transport Controls (SMTC). Notification fallback can optionally enrich that fallback path with artist and album metadata from Amazon Music's Windows notifications.
       </p>
     </div>
 
@@ -270,16 +273,19 @@
       <h3 style="font-size: 0.95rem; color: var(--text); margin-bottom: 8px;">Installer (recommended)</h3>
       <p style="color: var(--text-dim); font-size: 0.9rem; line-height: 1.7; margin-bottom: 12px;">
         Download <code style="color: var(--accent); background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px;">AmazonMusicRPC_Setup.exe</code> from
-        <a href="https://github.com/eripum9/Amazon-Music-Discord-RPC/releases" style="color: var(--accent);">Releases</a>, run it, and you're done.
+        <a href="https://github.com/eripum9/Amazon-Music-Discord-RPC/releases" style="color: var(--accent);">Releases</a>, run it, and you're done. The installer:
       </p>
-      <p style="color: var(--text-dim); font-size: 0.85rem; line-height: 1.6; margin-bottom: 16px;">
-        Windows SmartScreen may display a warning since the executable is unsigned. Click "More info" and then "Run anyway" to proceed.
-      </p>
+      <ul class="req-list" style="margin-bottom: 16px;">
+        <li>Installs to <code style="color: var(--accent);">Program Files</code></li>
+        <li>Optionally creates a desktop shortcut</li>
+        <li>Optionally adds a startup entry</li>
+        <li>Shows up in <strong>Settings > Apps</strong> for clean uninstall</li>
+      </ul>
 
       <h3 style="font-size: 0.95rem; color: var(--text); margin-bottom: 8px;">From Source</h3>
       <div class="code-block">
         git clone https://github.com/eripum9/Amazon-Music-Discord-RPC.git<br>
-        cd AmazonMusic_rpc<br>
+        cd Amazon-Music-Discord-RPC<br>
         pip install -r requirements.txt<br>
         python main.py
       </div>
@@ -293,6 +299,45 @@
         <li><strong>Discord</strong> desktop app (running)</li>
       </ul>
       <p style="color: var(--muted); font-size: 0.85rem; margin-top: 8px;">No Python installation needed if using the installer.</p>
+    </div>
+
+    <div class="content-card">
+      <h2>Building</h2>
+      <h3 style="font-size: 0.95rem; color: var(--text); margin-bottom: 8px;">Build the executable</h3>
+      <div class="code-block">
+        pip install pyinstaller<br>
+        pyinstaller AmazonMusicRPC.spec --noconfirm
+      </div>
+      <p style="color: var(--text-dim); font-size: 0.9rem; line-height: 1.7; margin-top: 8px; margin-bottom: 16px;">
+        The output goes to <code style="color: var(--accent);">dist/AmazonMusicRPC.exe</code>.
+      </p>
+
+      <h3 style="font-size: 0.95rem; color: var(--text); margin-bottom: 8px;">Build the installer</h3>
+      <p style="color: var(--text-dim); font-size: 0.9rem; line-height: 1.7; margin-bottom: 8px;">
+        Requires <a href="https://jrsoftware.org/isdl.php" style="color: var(--accent);">Inno Setup 6</a>.
+      </p>
+      <div class="code-block">
+        "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer.iss
+      </div>
+      <p style="color: var(--text-dim); font-size: 0.9rem; line-height: 1.7; margin-top: 8px; margin-bottom: 8px;">
+        Or if installed via winget:
+      </p>
+      <div class="code-block">
+        "%LOCALAPPDATA%\Programs\Inno Setup 6\ISCC.exe" installer.iss
+      </div>
+      <p style="color: var(--text-dim); font-size: 0.9rem; line-height: 1.7; margin-top: 8px; margin-bottom: 16px;">
+        Output: <code style="color: var(--accent);">installer_output/AmazonMusicRPC_Setup.exe</code>
+      </p>
+    </div>
+
+    <div class="content-card">
+      <h2>Configuration</h2>
+      <p style="color: var(--text-dim); font-size: 0.9rem; line-height: 1.7;">
+        Settings are stored in <code style="color: var(--accent);">%APPDATA%\AmazonMusicRPC\config.json</code> (or the project directory when running from source).
+      </p>
+      <p style="color: var(--text-dim); font-size: 0.9rem; line-height: 1.7; margin-top: 12px;">
+        Right-click the tray icon and select <strong>Settings</strong> to open the configuration window.
+      </p>
     </div>
 
     <div class="content-card">
