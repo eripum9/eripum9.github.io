@@ -3,16 +3,32 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Amazon Music RPC</title>
-  <meta name="description" content="Discord Rich Presence for Amazon Music on Windows." />
+  <title>Amazon Music Discord Rich Presence for Windows</title>
+  <meta name="description" content="Spotify-style Discord Rich Presence for Amazon Music on Windows. Show your current Amazon Music song, artist, album art, pause state, and live timer on Discord." />
   <link rel="stylesheet" href="../css/styles.css" />
   <style>
-    .page-content {
+    .product-page {
       position: relative;
       z-index: 1;
-      max-width: 760px;
-      margin: 0 auto;
+    }
+
+    .product-hero {
+      min-height: calc(100vh - var(--topbar-height) - 96px);
+      display: grid;
+      align-items: end;
+      background:
+        linear-gradient(90deg, rgba(14, 20, 25, 0.96) 0%, rgba(14, 20, 25, 0.82) 45%, rgba(14, 20, 25, 0.42) 100%),
+        linear-gradient(0deg, var(--bg) 0%, rgba(14, 20, 25, 0.08) 32%),
+        url("images/example1.png") center right / min(980px, 72vw) auto no-repeat;
       padding: var(--space-xl) var(--space-lg) var(--space-2xl);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .hero-inner,
+    .section-inner {
+      max-width: 1080px;
+      width: 100%;
+      margin: 0 auto;
     }
 
     .back-link {
@@ -22,175 +38,226 @@
       color: var(--muted);
       text-decoration: none;
       font-size: 0.85rem;
-      margin-bottom: var(--space-lg);
+      margin-bottom: var(--space-xl);
       transition: color 0.2s;
     }
+
     .back-link:hover { color: var(--accent); }
     .back-link svg { width: 16px; height: 16px; }
 
-    .page-title {
-      font-size: 2rem;
+    .eyebrow {
+      color: var(--accent);
+      font-size: 0.78rem;
       font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-sm);
+    }
+
+    .product-hero h1 {
+      max-width: 760px;
+      font-size: clamp(2.4rem, 7vw, 5.8rem);
+      line-height: 0.95;
+      letter-spacing: 0;
+      margin-bottom: var(--space-md);
+    }
+
+    .hero-copy {
+      max-width: 620px;
+      color: var(--text-dim);
+      font-size: 1.12rem;
+      line-height: 1.7;
+      margin: 0 0 var(--space-lg);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-xl);
+    }
+
+    .trust-row {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(120px, 1fr));
+      gap: 10px;
+      max-width: 920px;
+    }
+
+    .trust-pill {
+      background: rgba(255, 255, 255, 0.045);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      color: var(--text);
+      font-size: 0.82rem;
+      line-height: 1.35;
+    }
+
+    .section-band {
+      padding: var(--space-2xl) var(--space-lg);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .section-band.alt {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .section-kicker {
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
       margin-bottom: var(--space-xs);
-      background: linear-gradient(135deg, var(--text), var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
     }
 
-    .page-subtitle {
-      color: var(--muted);
+    .section-heading {
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      margin-bottom: var(--space-md);
+      max-width: 720px;
+    }
+
+    .section-copy {
+      color: var(--text-dim);
+      max-width: 760px;
       font-size: 1rem;
-      margin-bottom: var(--space-xl);
-      line-height: 1.6;
-    }
-
-    .badge-row {
-      display: flex;
-      gap: 8px;
-      margin-bottom: var(--space-lg);
-    }
-    .badge-row img { height: 20px; }
-
-    .info-banner {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: rgba(110, 231, 183, 0.06);
-      border: 1px solid rgba(110, 231, 183, 0.12);
-      border-radius: var(--radius-md);
-      padding: 14px 18px;
-      margin-bottom: var(--space-xl);
-      text-decoration: none;
-      transition: border-color 0.2s, background 0.2s;
-    }
-    .info-banner:hover {
-      background: rgba(110, 231, 183, 0.1);
-      border-color: rgba(110, 231, 183, 0.25);
-    }
-    .info-banner-icon {
-      font-size: 1.3rem;
-      flex-shrink: 0;
-    }
-    .info-banner-text {
-      color: var(--text);
-      font-size: 0.9rem;
-      line-height: 1.5;
-    }
-    .info-banner-text strong {
-      color: var(--accent);
-    }
-    .info-banner-arrow {
-      margin-left: auto;
-      color: var(--accent);
-      font-size: 1.1rem;
-      flex-shrink: 0;
-    }
-
-    .preview-section {
-      margin-bottom: var(--space-xl);
-    }
-    .preview-section h2 {
-      font-size: 1.1rem;
-      margin-bottom: var(--space-md);
-    }
-    .preview-img {
-      width: 100%;
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
-    }
-
-    .content-card {
-      background: var(--bg-surface);
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      border-radius: var(--radius-md);
-      padding: var(--space-lg);
-      margin-bottom: var(--space-lg);
-    }
-    .content-card h2 {
-      font-size: 1.2rem;
-      margin-bottom: var(--space-md);
-      color: var(--text);
-    }
-
-    .feature-list {
-      list-style: none;
-      padding: 0;
+      line-height: 1.8;
       margin: 0;
     }
-    .feature-list li {
-      padding: 8px 0;
-      color: var(--text-dim);
-      font-size: 0.9rem;
-      line-height: 1.6;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-    }
-    .feature-list li:last-child { border-bottom: none; }
-    .feature-list li strong { color: var(--text); }
 
-    .code-block {
-      background: rgba(0, 0, 0, 0.3);
+    .media-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
+      gap: var(--space-lg);
+      align-items: start;
+      margin-top: var(--space-xl);
+    }
+
+    .media-frame {
+      background: var(--bg-surface);
       border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: var(--radius-sm);
-      padding: 12px 16px;
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      color: var(--accent);
-      overflow-x: auto;
-      margin: var(--space-sm) 0;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.32);
     }
 
-    .req-list {
-      list-style: none;
-      padding: 0;
+    .media-frame img {
+      display: block;
+      width: 100%;
+      height: auto;
     }
-    .req-list li {
-      padding: 6px 0;
+
+    .stack {
+      display: grid;
+      gap: var(--space-md);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-xl);
+    }
+
+    .feature-card,
+    .safety-card,
+    .trouble-card {
+      background: var(--bg-surface);
+      border: 1px solid rgba(255, 255, 255, 0.055);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+    }
+
+    .feature-card h3,
+    .safety-card h3,
+    .trouble-card h3 {
+      margin-bottom: var(--space-xs);
+      color: var(--text);
+      font-size: 1rem;
+    }
+
+    .feature-card p,
+    .safety-card p,
+    .trouble-card p {
       color: var(--text-dim);
       font-size: 0.9rem;
+      line-height: 1.65;
+      margin: 0;
     }
-    .req-list li strong { color: var(--text); }
 
-    .credits-list {
-      list-style: none;
-      padding: 0;
+    .safety-grid,
+    .trouble-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-xl);
     }
-    .credits-list li {
-      padding: 4px 0;
-      font-size: 0.85rem;
-      color: var(--text-dim);
+
+    .link-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-top: var(--space-lg);
     }
-    .credits-list a {
+
+    .text-link {
       color: var(--accent);
-      text-decoration: none;
-    }
-    .credits-list a:hover { text-decoration: underline; }
-
-    .download-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--accent);
-      color: #04201a;
-      padding: 12px 24px;
-      border-radius: var(--radius-sm);
       text-decoration: none;
       font-weight: 600;
-      font-size: 0.95rem;
-      transition: background 0.15s, box-shadow 0.15s, transform 0.15s;
-      box-shadow: 0 2px 12px rgba(110, 231, 183, 0.2);
-      margin-bottom: var(--space-lg);
+      font-size: 0.92rem;
     }
-    .download-btn:hover {
-      background: var(--accent-dim);
-      box-shadow: 0 4px 20px rgba(110, 231, 183, 0.3);
-      transform: translateY(-1px);
+
+    .text-link:hover { text-decoration: underline; }
+
+    .final-cta {
+      text-align: center;
+      padding: var(--space-2xl) var(--space-lg);
+    }
+
+    .final-cta h2 {
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      margin-bottom: var(--space-sm);
+    }
+
+    .final-cta p {
+      color: var(--text-dim);
+      margin: 0 auto var(--space-lg);
+      max-width: 620px;
+    }
+
+    @media (max-width: 860px) {
+      .product-hero {
+        min-height: auto;
+        background:
+          linear-gradient(0deg, var(--bg) 0%, rgba(14, 20, 25, 0.78) 42%, rgba(14, 20, 25, 0.58) 100%),
+          url("images/example1.png") top center / 920px auto no-repeat;
+        padding-top: min(44vw, 280px);
+      }
+
+      .trust-row,
+      .feature-grid,
+      .safety-grid,
+      .trouble-grid,
+      .media-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .hero-actions .btn,
+      .final-cta .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .product-hero h1 {
+        font-size: 2.45rem;
+      }
     }
   </style>
 </head>
 <body>
-
   <header class="site-topbar">
     <div class="topbar-inner">
       <img src="../assets/images/logosmall.svg" class="topbar-logo" alt="logo" />
@@ -201,158 +268,170 @@
     </div>
   </header>
 
-  <div class="page-content">
-    <a href="/" class="back-link">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-      Back to Projects
-    </a>
-
-    <h1 class="page-title">Amazon Music RPC</h1>
-    <p class="page-subtitle">Discord Rich Presence for Amazon Music on Windows. Shows what you're listening to — including track name, artist, album art, and a live timer — directly on your Discord profile.</p>
-
-    <div class="badge-row">
-      <img src="https://img.shields.io/badge/platform-Windows%2010%2F11-blue" alt="Windows" />
-      <img src="https://img.shields.io/badge/python-3.11%2B-yellow" alt="Python" />
-    </div>
-
-    <a href="notification-setup/" class="info-banner">
-      <span class="info-banner-icon">&#x1F514;</span>
-      <span class="info-banner-text">
-        Using <strong>Notification Enrichment</strong>? Learn how to enable Amazon Music notifications for more accurate track info.
-      </span>
-      <span class="info-banner-arrow">&rarr;</span>
-    </a>
-
-    <a class="download-btn" href="https://github.com/eripum9/Amazon-Music-Discord-RPC/releases/latest" target="_blank" rel="noopener">
-      &#x2B07; Download Latest Release
-    </a>
-
-    <div class="preview-section">
-      <h2>Discord Rich Presence</h2>
-      <img src="images/example1.png" alt="Discord Rich Presence preview" class="preview-img" />
-    </div>
-
-    <div class="preview-section">
-      <h2>Settings UI</h2>
-      <img src="images/example2.png" alt="Settings UI preview" class="preview-img" />
-    </div>
-
-    <div class="content-card">
-      <h2>Features</h2>
-      <ul class="feature-list">
-        <li><strong>Live track display</strong> — title, artist, album name, and progress bar with elapsed/total time</li>
-        <li><strong>Album art</strong> — uses Amazon Music artwork first, with external artwork lookup as fallback</li>
-        <li><strong>Fallback metadata</strong> — uses SMTC and Windows notifications only when enhanced Amazon metadata is unavailable</li>
-        <li><strong>Pause state</strong> — keeps your presence visible when paused, with a frozen progress bar and pause icon</li>
-        <li><strong>Last.fm scrobbling</strong> — authenticate with one click and scrobble tracks automatically</li>
-        <li><strong>ListenBrainz scrobbling</strong> — paste your user token, validate it in Settings, and scrobble tracks</li>
-        <li><strong>Listen button</strong> — adds an Amazon Music link by default, with Deezer as an optional source</li>
-        <li><strong>Privacy controls</strong> — private session mode and keyword filters for tracks you do not want to share</li>
-        <li><strong>Diagnostics window</strong> — overview health checks, development tests, log history, and live console output in one resizable window</li>
-        <li><strong>Report issue shortcut</strong> — opens the GitHub issue page from Settings or Diagnostics</li>
-        <li><strong>Auto-updater</strong> — checks for updates on startup and via the Settings window</li>
-        <li><strong>System tray app</strong> — runs quietly in the background</li>
-        <li><strong>Modern settings UI</strong> — dark theme with WebView2 (Edge), Windows 11 style, with saved window sizing</li>
-        <li><strong>Start on Windows startup</strong> — optional, launches minimized to tray</li>
-        <li><strong>Custom Discord Application ID</strong> — use your own if you want custom assets</li>
-      </ul>
-    </div>
-
-    <div class="content-card">
-      <h2>How It Works</h2>
-      <p style="color: var(--text-dim); font-size: 0.9rem; line-height: 1.7;">
-        Amazon Music metadata is read from the local Amazon Music desktop app when enhanced metadata is enabled. This provides the current title, artist, album, artwork, playback state, and progress timing for Discord Rich Presence.
-      </p>
-      <p style="color: var(--text-dim); font-size: 0.9rem; line-height: 1.7; margin-top: 12px;">
-        If enhanced Amazon metadata is unavailable, the app falls back to Windows' System Media Transport Controls (SMTC). Notification fallback can optionally enrich that fallback path with artist and album metadata from Amazon Music's Windows notifications.
-      </p>
-    </div>
-
-    <div class="content-card">
-      <h2>Installation</h2>
-      <h3 style="font-size: 0.95rem; color: var(--text); margin-bottom: 8px;">Installer (recommended)</h3>
-      <p style="color: var(--text-dim); font-size: 0.9rem; line-height: 1.7; margin-bottom: 12px;">
-        Download <code style="color: var(--accent); background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px;">AmazonMusicRPC_Setup.exe</code> from
-        <a href="https://github.com/eripum9/Amazon-Music-Discord-RPC/releases" style="color: var(--accent);">Releases</a>, run it, and you're done. The installer:
-      </p>
-      <ul class="req-list" style="margin-bottom: 16px;">
-        <li>Installs to <code style="color: var(--accent);">Program Files</code></li>
-        <li>Optionally creates a desktop shortcut</li>
-        <li>Optionally adds a startup entry</li>
-        <li>Shows up in <strong>Settings > Apps</strong> for clean uninstall</li>
-      </ul>
-
-      <h3 style="font-size: 0.95rem; color: var(--text); margin-bottom: 8px;">From Source</h3>
-      <div class="code-block">
-        git clone https://github.com/eripum9/Amazon-Music-Discord-RPC.git<br>
-        cd Amazon-Music-Discord-RPC<br>
-        pip install -r requirements.txt<br>
-        python main.py
+  <main class="product-page">
+    <section class="product-hero">
+      <div class="hero-inner">
+        <a href="/" class="back-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          Back to Projects
+        </a>
+        <div class="eyebrow">Amazon Music RPC for Windows</div>
+        <h1>Show your Amazon Music songs on Discord</h1>
+        <p class="hero-copy">A lightweight Windows app that gives Amazon Music the Spotify-style Discord status it never had.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="https://github.com/eripum9/Amazon-Music-Discord-RPC/releases/latest" target="_blank" rel="noopener">Download for Windows</a>
+          <a class="btn" href="https://github.com/eripum9/Amazon-Music-Discord-RPC" target="_blank" rel="noopener">View on GitHub</a>
+          <a class="btn" href="#how-it-works">How it works</a>
+        </div>
+        <div class="trust-row" aria-label="Highlights">
+          <div class="trust-pill">Song, artist, and album art</div>
+          <div class="trust-pill">Live timer and pause state</div>
+          <div class="trust-pill">Last.fm and ListenBrainz</div>
+          <div class="trust-pill">Privacy mode and filters</div>
+          <div class="trust-pill">No Python needed</div>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <div class="content-card">
-      <h2>Requirements</h2>
-      <ul class="req-list">
-        <li><strong>Windows 10/11</strong> (64-bit)</li>
-        <li><strong>Amazon Music</strong> desktop app</li>
-        <li><strong>Discord</strong> desktop app (running)</li>
-      </ul>
-      <p style="color: var(--muted); font-size: 0.85rem; margin-top: 8px;">No Python installation needed if using the installer.</p>
-    </div>
-
-    <div class="content-card">
-      <h2>Building</h2>
-      <h3 style="font-size: 0.95rem; color: var(--text); margin-bottom: 8px;">Build the executable</h3>
-      <div class="code-block">
-        pip install pyinstaller<br>
-        pyinstaller AmazonMusicRPC.spec --noconfirm
+    <section class="section-band" id="demo">
+      <div class="section-inner">
+        <div class="section-kicker">Preview</div>
+        <h2 class="section-heading">See what shows up on Discord</h2>
+        <p class="section-copy">Amazon Music RPC updates your Discord profile with the track, artist, album artwork, and playback timing from the Amazon Music desktop app.</p>
+        <div class="media-grid">
+          <div class="media-frame">
+            <img src="images/example1.png" alt="Discord Rich Presence preview showing Amazon Music track information" />
+          </div>
+          <div class="stack">
+            <div class="media-frame">
+              <img src="images/example2.png" alt="Amazon Music RPC settings window" />
+            </div>
+            <div class="feature-card">
+              <h3>Built for daily use</h3>
+              <p>Run it in the tray, let it update Discord automatically, and tune privacy or scrobbling from Settings when needed.</p>
+            </div>
+          </div>
+        </div>
       </div>
-      <p style="color: var(--text-dim); font-size: 0.9rem; line-height: 1.7; margin-top: 8px; margin-bottom: 16px;">
-        The output goes to <code style="color: var(--accent);">dist/AmazonMusicRPC.exe</code>.
-      </p>
+    </section>
 
-      <h3 style="font-size: 0.95rem; color: var(--text); margin-bottom: 8px;">Build the installer</h3>
-      <p style="color: var(--text-dim); font-size: 0.9rem; line-height: 1.7; margin-bottom: 8px;">
-        Requires <a href="https://jrsoftware.org/isdl.php" style="color: var(--accent);">Inno Setup 6</a>.
-      </p>
-      <div class="code-block">
-        "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer.iss
+    <section class="section-band alt" id="why">
+      <div class="section-inner">
+        <div class="section-kicker">Why use it?</div>
+        <h2 class="section-heading">Amazon Music does not get Spotify-style Discord status by itself</h2>
+        <p class="section-copy">This fills that gap for Windows users. It reads what the Amazon Music desktop app is playing and sends a polished Rich Presence payload to Discord.</p>
       </div>
-      <p style="color: var(--text-dim); font-size: 0.9rem; line-height: 1.7; margin-top: 8px; margin-bottom: 8px;">
-        Or if installed via winget:
-      </p>
-      <div class="code-block">
-        "%LOCALAPPDATA%\Programs\Inno Setup 6\ISCC.exe" installer.iss
+    </section>
+
+    <section class="section-band" id="what-it-shows">
+      <div class="section-inner">
+        <div class="section-kicker">What it shows</div>
+        <h2 class="section-heading">Everything people expect from a music presence</h2>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <h3>Now playing</h3>
+            <p>Show the current title, artist, album, album art, and progress timer on your Discord profile.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Pause state</h3>
+            <p>Keep your presence visible while paused with a frozen progress bar and clear paused state.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Amazon links</h3>
+            <p>Add a listen button that points to Amazon Music by default, with Deezer available as an option.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Scrobbling</h3>
+            <p>Connect Last.fm or ListenBrainz to scrobble tracks while Amazon Music plays.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Privacy controls</h3>
+            <p>Use private session or keyword filters to hide tracks you do not want to share.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Diagnostics</h3>
+            <p>Check RPC, Discord, metadata, logs, and self-tests from a dedicated diagnostics window.</p>
+          </div>
+        </div>
       </div>
-      <p style="color: var(--text-dim); font-size: 0.9rem; line-height: 1.7; margin-top: 8px; margin-bottom: 16px;">
-        Output: <code style="color: var(--accent);">installer_output/AmazonMusicRPC_Setup.exe</code>
-      </p>
-    </div>
+    </section>
 
-    <div class="content-card">
-      <h2>Configuration</h2>
-      <p style="color: var(--text-dim); font-size: 0.9rem; line-height: 1.7;">
-        Settings are stored in <code style="color: var(--accent);">%APPDATA%\AmazonMusicRPC\config.json</code> (or the project directory when running from source).
-      </p>
-      <p style="color: var(--text-dim); font-size: 0.9rem; line-height: 1.7; margin-top: 12px;">
-        Right-click the tray icon and select <strong>Settings</strong> to open the configuration window.
-      </p>
-    </div>
+    <section class="section-band alt" id="how-it-works">
+      <div class="section-inner">
+        <div class="section-kicker">How it works</div>
+        <h2 class="section-heading">Local metadata first, Windows fallback when needed</h2>
+        <p class="section-copy">Enhanced metadata reads the local Amazon Music desktop app for richer title, artist, album, artwork, playback state, and timing data. If enhanced metadata is unavailable, the app falls back to Windows media metadata and optional Amazon Music notification enrichment.</p>
+      </div>
+    </section>
 
-    <div class="content-card">
-      <h2>Credits</h2>
-      <ul class="credits-list">
-        <li><a href="https://github.com/qwertyquerty/pypresence">pypresence</a> — Discord RPC library</li>
-        <li><a href="https://pypi.org/project/winsdk/">winsdk</a> — Windows SDK bindings for SMTC and notifications</li>
-        <li><a href="https://pywebview.flowrl.com/">pywebview</a> — Native webview for the settings UI</li>
-        <li><a href="https://github.com/pylast/pylast">pylast</a> — Last.fm API library</li>
-        <li><a href="https://developers.deezer.com/">Deezer API</a> — Album art search</li>
-        <li><a href="https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/">iTunes Search API</a> — Album art fallback</li>
-        <li><a href="https://listenbrainz.readthedocs.io/">ListenBrainz API</a> — ListenBrainz scrobbling</li>
-      </ul>
-    </div>
-  </div>
+    <section class="section-band" id="safety">
+      <div class="section-inner">
+        <div class="section-kicker">Is it safe?</div>
+        <h2 class="section-heading">The privacy-sensitive parts are visible and optional</h2>
+        <div class="safety-grid">
+          <div class="safety-card">
+            <h3>Enhanced metadata is optional</h3>
+            <p>New installs ask before enabling enhanced Amazon Music metadata. Fallback-only mode is available in Settings.</p>
+          </div>
+          <div class="safety-card">
+            <h3>Local-first design</h3>
+            <p>Amazon Music metadata and notification fallback are read locally. Discord only receives the Rich Presence data needed to show your status.</p>
+          </div>
+          <div class="safety-card">
+            <h3>Token handling</h3>
+            <p>Last.fm and ListenBrainz tokens stay local, diagnostics redact known token values, and Settings includes a clear-token action.</p>
+          </div>
+          <div class="safety-card">
+            <h3>Release verification</h3>
+            <p>Release notes include SHA256 hashes, and the updater verifies installers when a hash is present.</p>
+          </div>
+        </div>
+        <div class="link-list">
+          <a class="text-link" href="https://github.com/eripum9/Amazon-Music-Discord-RPC/blob/master/SECURITY.md" target="_blank" rel="noopener">Security policy</a>
+          <a class="text-link" href="https://github.com/eripum9/Amazon-Music-Discord-RPC/blob/master/docs/privacy.md" target="_blank" rel="noopener">Privacy details</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band alt" id="troubleshooting">
+      <div class="section-inner">
+        <div class="section-kicker">Troubleshooting</div>
+        <h2 class="section-heading">If Discord does not update, start here</h2>
+        <div class="trouble-grid">
+          <div class="trouble-card">
+            <h3>Check the basics</h3>
+            <p>Make sure Discord desktop, Amazon Music, and Amazon Music RPC are running. Open Diagnostics from the tray for live status.</p>
+          </div>
+          <div class="trouble-card">
+            <h3>Metadata fallback</h3>
+            <p>If enhanced metadata is off or unavailable, Windows media metadata still works. Notification fallback can improve the fallback path.</p>
+          </div>
+          <div class="trouble-card">
+            <h3>Notification setup</h3>
+            <p>Amazon Music notifications must be enabled, and Amazon Music usually needs to be minimized for notification fallback to help.</p>
+          </div>
+          <div class="trouble-card">
+            <h3>Scrobbling</h3>
+            <p>Reconnect Last.fm or validate a fresh ListenBrainz token if scrobbling stops. Private session can pause scrobbling.</p>
+          </div>
+        </div>
+        <div class="link-list">
+          <a class="text-link" href="notification-setup/">Notification setup guide</a>
+          <a class="text-link" href="https://github.com/eripum9/Amazon-Music-Discord-RPC/blob/master/docs/troubleshooting.md" target="_blank" rel="noopener">Full troubleshooting guide</a>
+          <a class="text-link" href="https://github.com/eripum9/Amazon-Music-Discord-RPC/issues" target="_blank" rel="noopener">Report an issue</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <h2>Give Amazon Music a proper Discord status</h2>
+      <p>Open source, Windows installer, privacy controls, scrobbling, and the metadata people expect from a music presence.</p>
+      <div class="hero-actions" style="justify-content:center;">
+        <a class="btn primary" href="https://github.com/eripum9/Amazon-Music-Discord-RPC/releases/latest" target="_blank" rel="noopener">Download for Windows</a>
+        <a class="btn" href="https://github.com/eripum9/Amazon-Music-Discord-RPC" target="_blank" rel="noopener">View on GitHub</a>
+      </div>
+    </section>
+  </main>
 
   <footer class="site-footer">
     <small>&copy; 2026 PumpgunStudios</small>
