@@ -6,10 +6,16 @@
   <title>Amazon Music Discord Rich Presence for Windows</title>
   <meta name="description" content="Spotify-style Discord Rich Presence for Amazon Music on Windows. Show your current Amazon Music song, artist, album art, pause state, and live timer on Discord." />
   <link rel="stylesheet" href="../css/styles.css" />
+  <script>document.documentElement.classList.add("js");</script>
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
     .product-page {
       position: relative;
       z-index: 1;
+      animation: page-fade-in 560ms var(--ease-out) both;
     }
 
     .product-hero {
@@ -39,10 +45,14 @@
       text-decoration: none;
       font-size: 0.85rem;
       margin-bottom: var(--space-xl);
-      transition: color 0.2s;
+      transition: color var(--transition-fast), transform var(--transition-fast);
     }
 
-    .back-link:hover { color: var(--accent); }
+    .back-link:hover {
+      color: var(--accent);
+      transform: translateX(-3px);
+    }
+
     .back-link svg { width: 16px; height: 16px; }
 
     .eyebrow {
@@ -77,6 +87,17 @@
       margin-bottom: var(--space-xl);
     }
 
+    .hero-inner > * {
+      animation: hero-item-in 760ms var(--ease-out) both;
+    }
+
+    .hero-inner > :nth-child(1) { animation-delay: 80ms; }
+    .hero-inner > :nth-child(2) { animation-delay: 150ms; }
+    .hero-inner > :nth-child(3) { animation-delay: 220ms; }
+    .hero-inner > :nth-child(4) { animation-delay: 290ms; }
+    .hero-inner > :nth-child(5) { animation-delay: 360ms; }
+    .hero-inner > :nth-child(6) { animation-delay: 430ms; }
+
     .trust-row {
       display: grid;
       grid-template-columns: repeat(5, minmax(120px, 1fr));
@@ -92,6 +113,13 @@
       color: var(--text);
       font-size: 0.82rem;
       line-height: 1.35;
+      transition: transform var(--transition-med), border-color var(--transition-med), background var(--transition-med);
+    }
+
+    .trust-pill:hover {
+      background: rgba(110, 231, 183, 0.08);
+      border-color: rgba(110, 231, 183, 0.18);
+      transform: translateY(-3px);
     }
 
     .section-band {
@@ -140,12 +168,25 @@
       border-radius: var(--radius-md);
       overflow: hidden;
       box-shadow: 0 20px 48px rgba(0, 0, 0, 0.32);
+      transition: transform var(--transition-med), border-color var(--transition-med), box-shadow var(--transition-med);
     }
 
     .media-frame img {
       display: block;
       width: 100%;
       height: auto;
+      transition: transform 700ms var(--ease-out), filter 700ms var(--ease-out);
+    }
+
+    .media-frame:hover {
+      border-color: rgba(110, 231, 183, 0.18);
+      box-shadow: 0 26px 64px rgba(0, 0, 0, 0.38);
+      transform: translateY(-4px);
+    }
+
+    .media-frame:hover img {
+      filter: saturate(1.08) contrast(1.03);
+      transform: scale(1.018);
     }
 
     .stack {
@@ -167,6 +208,16 @@
       border: 1px solid rgba(255, 255, 255, 0.055);
       border-radius: var(--radius-md);
       padding: var(--space-lg);
+      transition: transform var(--transition-med), border-color var(--transition-med), background var(--transition-med), box-shadow var(--transition-med);
+    }
+
+    .feature-card:hover,
+    .safety-card:hover,
+    .trouble-card:hover {
+      background: rgba(26, 36, 46, 0.92);
+      border-color: rgba(110, 231, 183, 0.16);
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.2);
+      transform: translateY(-4px);
     }
 
     .feature-card h3,
@@ -206,9 +257,13 @@
       text-decoration: none;
       font-weight: 600;
       font-size: 0.92rem;
+      transition: color var(--transition-fast), opacity var(--transition-fast);
     }
 
-    .text-link:hover { text-decoration: underline; }
+    .text-link:hover {
+      color: var(--text);
+      text-decoration: underline;
+    }
 
     .final-cta {
       text-align: center;
@@ -224,6 +279,70 @@
       color: var(--text-dim);
       margin: 0 auto var(--space-lg);
       max-width: 620px;
+    }
+
+    .js [data-reveal] {
+      filter: blur(8px);
+      opacity: 0;
+      transform: translateY(24px);
+      transition:
+        opacity 760ms var(--ease-out),
+        transform 760ms var(--ease-out),
+        filter 760ms var(--ease-out);
+      transition-delay: var(--reveal-delay, 0ms);
+      will-change: opacity, transform, filter;
+    }
+
+    .js [data-reveal="scale"] {
+      transform: translateY(18px) scale(0.975);
+    }
+
+    .js [data-reveal].is-visible {
+      filter: blur(0);
+      opacity: 1;
+      transform: none;
+    }
+
+    .feature-grid > [data-reveal]:nth-child(2),
+    .safety-grid > [data-reveal]:nth-child(2),
+    .trouble-grid > [data-reveal]:nth-child(2),
+    .trust-row > .trust-pill:nth-child(2) { --reveal-delay: 70ms; }
+
+    .feature-grid > [data-reveal]:nth-child(3),
+    .safety-grid > [data-reveal]:nth-child(3),
+    .trouble-grid > [data-reveal]:nth-child(3),
+    .trust-row > .trust-pill:nth-child(3) { --reveal-delay: 140ms; }
+
+    .feature-grid > [data-reveal]:nth-child(4),
+    .safety-grid > [data-reveal]:nth-child(4),
+    .trouble-grid > [data-reveal]:nth-child(4),
+    .trust-row > .trust-pill:nth-child(4) { --reveal-delay: 210ms; }
+
+    .feature-grid > [data-reveal]:nth-child(5),
+    .trust-row > .trust-pill:nth-child(5) { --reveal-delay: 280ms; }
+
+    .feature-grid > [data-reveal]:nth-child(6) { --reveal-delay: 350ms; }
+
+    @keyframes page-fade-in {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes hero-item-in {
+      from {
+        filter: blur(8px);
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        filter: blur(0);
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @media (max-width: 860px) {
@@ -255,6 +374,33 @@
         font-size: 2.45rem;
       }
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .product-page,
+      .product-hero,
+      .hero-inner > *,
+      .media-frame,
+      .media-frame img,
+      .trust-pill,
+      .feature-card,
+      .safety-card,
+      .trouble-card,
+      .back-link,
+      .text-link {
+        animation: none !important;
+        transition: none !important;
+      }
+
+      .js [data-reveal] {
+        filter: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -284,29 +430,29 @@
           <a class="btn" href="#how-it-works">How it works</a>
         </div>
         <div class="trust-row" aria-label="Highlights">
-          <div class="trust-pill">Song, artist, and album art</div>
-          <div class="trust-pill">Live timer and pause state</div>
-          <div class="trust-pill">Last.fm and ListenBrainz</div>
-          <div class="trust-pill">Privacy mode and filters</div>
-          <div class="trust-pill">No Python needed</div>
+          <div class="trust-pill" data-reveal="scale">Song, artist, and album art</div>
+          <div class="trust-pill" data-reveal="scale">Live timer and pause state</div>
+          <div class="trust-pill" data-reveal="scale">Last.fm and ListenBrainz</div>
+          <div class="trust-pill" data-reveal="scale">Privacy mode and filters</div>
+          <div class="trust-pill" data-reveal="scale">No Python needed</div>
         </div>
       </div>
     </section>
 
-    <section class="section-band" id="demo">
+    <section class="section-band" id="demo" data-reveal>
       <div class="section-inner">
         <div class="section-kicker">Preview</div>
         <h2 class="section-heading">See what shows up on Discord</h2>
         <p class="section-copy">Amazon Music RPC updates your Discord profile with the track, artist, album artwork, and playback timing from the Amazon Music desktop app.</p>
         <div class="media-grid">
-          <div class="media-frame">
+          <div class="media-frame" data-reveal="scale">
             <img src="images/example1.png" alt="Discord Rich Presence preview showing Amazon Music track information" />
           </div>
           <div class="stack">
-            <div class="media-frame">
+            <div class="media-frame" data-reveal="scale">
               <img src="images/example2.png" alt="Amazon Music RPC settings window" />
             </div>
-            <div class="feature-card">
+            <div class="feature-card" data-reveal>
               <h3>Built for daily use</h3>
               <p>Run it in the tray, let it update Discord automatically, and tune privacy or scrobbling from Settings when needed.</p>
             </div>
@@ -315,7 +461,7 @@
       </div>
     </section>
 
-    <section class="section-band alt" id="why">
+    <section class="section-band alt" id="why" data-reveal>
       <div class="section-inner">
         <div class="section-kicker">Why use it?</div>
         <h2 class="section-heading">Amazon Music does not get Spotify-style Discord status by itself</h2>
@@ -323,32 +469,32 @@
       </div>
     </section>
 
-    <section class="section-band" id="what-it-shows">
+    <section class="section-band" id="what-it-shows" data-reveal>
       <div class="section-inner">
         <div class="section-kicker">What it shows</div>
         <h2 class="section-heading">Everything people expect from a music presence</h2>
         <div class="feature-grid">
-          <div class="feature-card">
+          <div class="feature-card" data-reveal>
             <h3>Now playing</h3>
             <p>Show the current title, artist, album, album art, and progress timer on your Discord profile.</p>
           </div>
-          <div class="feature-card">
+          <div class="feature-card" data-reveal>
             <h3>Pause state</h3>
             <p>Keep your presence visible while paused with a frozen progress bar and clear paused state.</p>
           </div>
-          <div class="feature-card">
+          <div class="feature-card" data-reveal>
             <h3>Amazon links</h3>
             <p>Add a listen button that points to Amazon Music by default, with Deezer available as an option.</p>
           </div>
-          <div class="feature-card">
+          <div class="feature-card" data-reveal>
             <h3>Scrobbling</h3>
             <p>Connect Last.fm or ListenBrainz to scrobble tracks while Amazon Music plays.</p>
           </div>
-          <div class="feature-card">
+          <div class="feature-card" data-reveal>
             <h3>Privacy controls</h3>
             <p>Use private session or keyword filters to hide tracks you do not want to share.</p>
           </div>
-          <div class="feature-card">
+          <div class="feature-card" data-reveal>
             <h3>Diagnostics</h3>
             <p>Check RPC, Discord, metadata, logs, and self-tests from a dedicated diagnostics window.</p>
           </div>
@@ -356,7 +502,7 @@
       </div>
     </section>
 
-    <section class="section-band alt" id="how-it-works">
+    <section class="section-band alt" id="how-it-works" data-reveal>
       <div class="section-inner">
         <div class="section-kicker">How it works</div>
         <h2 class="section-heading">Local metadata first, Windows fallback when needed</h2>
@@ -364,24 +510,24 @@
       </div>
     </section>
 
-    <section class="section-band" id="safety">
+    <section class="section-band" id="safety" data-reveal>
       <div class="section-inner">
         <div class="section-kicker">Is it safe?</div>
         <h2 class="section-heading">The privacy-sensitive parts are visible and optional</h2>
         <div class="safety-grid">
-          <div class="safety-card">
+          <div class="safety-card" data-reveal>
             <h3>Enhanced metadata is optional</h3>
             <p>New installs ask before enabling enhanced Amazon Music metadata. Fallback-only mode is available in Settings.</p>
           </div>
-          <div class="safety-card">
+          <div class="safety-card" data-reveal>
             <h3>Local-first design</h3>
             <p>Amazon Music metadata and notification fallback are read locally. Discord only receives the Rich Presence data needed to show your status.</p>
           </div>
-          <div class="safety-card">
+          <div class="safety-card" data-reveal>
             <h3>Token handling</h3>
             <p>Last.fm and ListenBrainz tokens stay local, diagnostics redact known token values, and Settings includes a clear-token action.</p>
           </div>
-          <div class="safety-card">
+          <div class="safety-card" data-reveal>
             <h3>Release verification</h3>
             <p>Release notes include SHA256 hashes, and the updater verifies installers when a hash is present.</p>
           </div>
@@ -393,24 +539,24 @@
       </div>
     </section>
 
-    <section class="section-band alt" id="troubleshooting">
+    <section class="section-band alt" id="troubleshooting" data-reveal>
       <div class="section-inner">
         <div class="section-kicker">Troubleshooting</div>
         <h2 class="section-heading">If Discord does not update, start here</h2>
         <div class="trouble-grid">
-          <div class="trouble-card">
+          <div class="trouble-card" data-reveal>
             <h3>Check the basics</h3>
             <p>Make sure Discord desktop, Amazon Music, and Amazon Music RPC are running. Open Diagnostics from the tray for live status.</p>
           </div>
-          <div class="trouble-card">
+          <div class="trouble-card" data-reveal>
             <h3>Metadata fallback</h3>
             <p>If enhanced metadata is off or unavailable, Windows media metadata still works. Notification fallback can improve the fallback path.</p>
           </div>
-          <div class="trouble-card">
+          <div class="trouble-card" data-reveal>
             <h3>Notification setup</h3>
             <p>Amazon Music notifications must be enabled, and Amazon Music usually needs to be minimized for notification fallback to help.</p>
           </div>
-          <div class="trouble-card">
+          <div class="trouble-card" data-reveal>
             <h3>Scrobbling</h3>
             <p>Reconnect Last.fm or validate a fresh ListenBrainz token if scrobbling stops. Private session can pause scrobbling.</p>
           </div>
@@ -423,7 +569,7 @@
       </div>
     </section>
 
-    <section class="final-cta">
+    <section class="final-cta" data-reveal>
       <h2>Give Amazon Music a proper Discord status</h2>
       <p>Open source, Windows installer, privacy controls, scrobbling, and the metadata people expect from a music presence.</p>
       <div class="hero-actions" style="justify-content:center;">
@@ -436,5 +582,30 @@
   <footer class="site-footer">
     <small>&copy; 2026 PumpgunStudios</small>
   </footer>
+  <script>
+    (function () {
+      var revealItems = document.querySelectorAll("[data-reveal]");
+
+      if (!("IntersectionObserver" in window)) {
+        revealItems.forEach(function (item) {
+          item.classList.add("is-visible");
+        });
+        return;
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+
+      revealItems.forEach(function (item) {
+        observer.observe(item);
+      });
+    })();
+  </script>
 </body>
 </html>
