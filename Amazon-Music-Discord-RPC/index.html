@@ -18,6 +18,56 @@
       animation: page-fade-in 560ms var(--ease-out) both;
     }
 
+    .compat-alert-band {
+      padding: var(--space-md) var(--space-lg) 0;
+      background:
+        linear-gradient(180deg, rgba(68, 13, 18, 0.58), rgba(68, 13, 18, 0));
+    }
+
+    .compat-alert {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-md);
+      align-items: center;
+      background: linear-gradient(135deg, rgba(84, 20, 25, 0.96), rgba(36, 11, 16, 0.94));
+      border: 1px solid rgba(255, 94, 94, 0.44);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      box-shadow: 0 18px 42px rgba(255, 40, 40, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+    }
+
+    .compat-alert strong {
+      color: #ffd6d6;
+      display: block;
+      font-size: 0.96rem;
+      margin-bottom: 2px;
+    }
+
+    .compat-alert span {
+      color: rgba(255, 235, 235, 0.78);
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+
+    .compat-alert a {
+      color: #ffe5e5;
+      text-decoration: none;
+      font-weight: 700;
+      border: 1px solid rgba(255, 214, 214, 0.24);
+      border-radius: var(--radius-sm);
+      padding: 9px 12px;
+      background: rgba(255, 255, 255, 0.055);
+      transition: transform var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .compat-alert a:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 214, 214, 0.42);
+      transform: translateY(-1px);
+    }
+
     .product-hero {
       min-height: calc(100vh - var(--topbar-height) - 96px);
       display: grid;
@@ -346,6 +396,14 @@
     }
 
     @media (max-width: 860px) {
+      .compat-alert {
+        grid-template-columns: 1fr;
+      }
+
+      .compat-alert a {
+        text-align: center;
+      }
+
       .product-hero {
         min-height: auto;
         background:
@@ -415,6 +473,16 @@
   </header>
 
   <main class="product-page">
+    <section class="compat-alert-band">
+      <div class="compat-alert">
+        <div>
+          <strong>Enhanced metadata requires the Microsoft Store version of Amazon Music.</strong>
+          <span>The website/desktop installer version may reject the metadata launch flag and show a <code>--remote-debugging-port</code> error.</span>
+        </div>
+        <a href="compatibility/">Read compatibility notice</a>
+      </div>
+    </section>
+
     <section class="product-hero">
       <div class="hero-inner">
         <a href="/" class="back-link">
@@ -432,6 +500,7 @@
         <div class="trust-row" aria-label="Highlights">
           <div class="trust-pill" data-reveal="scale">Song, artist, and album art</div>
           <div class="trust-pill" data-reveal="scale">Live timer and pause state</div>
+          <div class="trust-pill" data-reveal="scale">Store app recommended</div>
           <div class="trust-pill" data-reveal="scale">Last.fm and ListenBrainz</div>
           <div class="trust-pill" data-reveal="scale">Privacy mode and filters</div>
           <div class="trust-pill" data-reveal="scale">No Python needed</div>
@@ -507,6 +576,10 @@
         <div class="section-kicker">How it works</div>
         <h2 class="section-heading">Local metadata first, Windows fallback when needed</h2>
         <p class="section-copy">Enhanced metadata reads the local Amazon Music desktop app for richer title, artist, album, artwork, playback state, and timing data. If enhanced metadata is unavailable, the app falls back to Windows media metadata and optional Amazon Music notification enrichment.</p>
+        <div class="feature-card" data-reveal>
+          <h3>Enhanced metadata compatibility</h3>
+          <p>Enhanced metadata is currently built and tested for the Microsoft Store version of Amazon Music. The website/desktop installer version may reject the metadata launch flag and show a <code>--remote-debugging-port</code> error. If that happens, install Amazon Music from the Microsoft Store or use fallback mode.</p>
+        </div>
       </div>
     </section>
 
@@ -552,6 +625,10 @@
           <div class="trouble-card" data-reveal>
             <h3>Metadata fallback</h3>
             <p>If enhanced metadata is off or unavailable, Windows media metadata still works. Notification fallback can improve the fallback path.</p>
+          </div>
+          <div class="trouble-card" data-reveal>
+            <h3>Metadata launch error</h3>
+            <p>If Amazon Music says <code>--remote-debugging-port</code> is unavailable, you are probably using the website/desktop installer version. Install the Microsoft Store version for enhanced metadata, or keep enhanced metadata off.</p>
           </div>
           <div class="trouble-card" data-reveal>
             <h3>Notification setup</h3>
