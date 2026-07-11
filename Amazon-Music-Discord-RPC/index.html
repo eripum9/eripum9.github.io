@@ -598,11 +598,15 @@
           </div>
           <div class="safety-card" data-reveal>
             <h3>Token handling</h3>
-            <p>Last.fm and ListenBrainz tokens stay local, diagnostics redact known token values, and Settings includes a clear-token action.</p>
+            <p>Last.fm and ListenBrainz tokens stay local in Windows Credential Manager, diagnostics redact known token values, and Settings includes a clear-token action.</p>
           </div>
           <div class="safety-card" data-reveal>
             <h3>Release verification</h3>
-            <p>Release notes include SHA256 hashes, and the updater verifies installers when a hash is present.</p>
+            <p>Official installers come from a reviewed GitHub Actions draft and include a detached SHA256 file that the updater requires before automatic installation.</p>
+          </div>
+          <div class="safety-card" data-reveal>
+            <h3>Network controls</h3>
+            <p>Automatic update checks, Deezer lookup, and iTunes artwork fallback can be controlled separately, with recent redacted request status shown in Diagnostics.</p>
           </div>
         </div>
         <div class="link-list">
