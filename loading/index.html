@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="A fictional infinite loading simulator. No real system operation is taking place." />
+  <meta name="theme-color" content="#0e1419" />
+  <title>Secure Operations Console — Infinite Loading Simulator</title>
+  <link rel="stylesheet" href="loading.css" />
+</head>
+<body>
+  <div class="ambient-grid" aria-hidden="true"></div>
+  <header class="console-header">
+    <a class="brand" href="/" aria-label="Return to project home">
+      <span class="brand-mark" aria-hidden="true">P</span>
+      <span><strong>Pumpgun Systems</strong><small>Secure Operations Console</small></span>
+    </a>
+    <div class="live-status" role="status"><span class="status-dot"></span><span id="system-status">Operation active</span></div>
+  </header>
+
+  <main class="shell" aria-describedby="fiction-note">
+    <section class="operation-card" aria-labelledby="operation-title">
+      <div class="eyebrow"><span>OPERATION ID: MIG-7F3A</span><span>PRIORITY: CRITICAL</span></div>
+      <h1 id="operation-title">System continuity migration</h1>
+      <p class="lede">Transferring protected infrastructure while maintaining service availability.</p>
+
+      <div class="progress-heading">
+        <div><span class="label">Current operation</span><strong id="operation-message">Establishing secure connection</strong></div>
+        <output id="progress-value" class="percentage" aria-live="polite">0.0%</output>
+      </div>
+      <div class="progress-track" role="progressbar" aria-label="Migration progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div id="progress-fill" class="progress-fill"></div>
+        <div class="progress-sheen" aria-hidden="true"></div>
+      </div>
+      <div class="metrics">
+        <div><span>Elapsed time</span><strong id="elapsed">00:00:00</strong></div>
+        <div><span>Estimated remaining</span><strong id="estimate">Calculating…</strong></div>
+        <div><span>Connection</span><strong id="connection">Encrypted · Stable</strong></div>
+      </div>
+    </section>
+
+    <section class="lower-grid">
+      <section class="log-card" aria-labelledby="log-heading">
+        <div class="card-heading"><div><span class="terminal-dot"></span><h2 id="log-heading">Activity log</h2></div><span>LIVE</span></div>
+        <ol id="activity-log" class="activity-log" aria-live="polite" aria-relevant="additions"></ol>
+      </section>
+      <aside id="diagnostics" class="diagnostics" aria-labelledby="diagnostics-heading">
+        <div class="card-heading"><div><h2 id="diagnostics-heading">Diagnostics</h2></div><span>AUTO</span></div>
+        <dl><div><dt>CPU</dt><dd id="cpu">Nominal</dd></div><div><dt>RAM</dt><dd id="ram">Available</dd></div><div><dt>GPU</dt><dd id="gpu">Idle</dd></div><div><dt>Coffee</dt><dd id="coffee">Adequate</dd></div></dl>
+      </aside>
+    </section>
+
+    <div class="actions">
+      <button id="cancel" class="button danger" type="button">Cancel operation</button>
+      <button id="about" class="button quiet" type="button" aria-expanded="false" aria-controls="about-panel">What is this?</button>
+    </div>
+    <section id="about-panel" class="about-panel" hidden>
+      <h2>An entirely fictional emergency</h2>
+      <p id="fiction-note">This is the Infinite Loading Simulator: a joke that performs no real update, migration, recovery, or system operation. It is designed to never finish. You can safely leave whenever your patience finishes first.</p>
+    </section>
+  </main>
+
+  <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+  <div id="dialog-backdrop" class="dialog-backdrop" hidden>
+    <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" aria-describedby="dialog-copy">
+      <span class="dialog-icon" aria-hidden="true">!</span><div><h2 id="dialog-title">Attention required</h2><p id="dialog-copy"></p><button id="dialog-action" class="button primary" type="button">Continue safely</button></div>
+    </section>
+  </div>
+  <script src="simulation.js"></script>
+</body>
+</html>
