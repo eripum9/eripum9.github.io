@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="A fictional infinite loading simulator. No real system operation is taking place." />
+  <meta name="description" content="Secure operations console for protected infrastructure continuity migrations." />
   <meta name="theme-color" content="#0e1419" />
-  <title>Secure Operations Console — Infinite Loading Simulator</title>
+  <title>Secure Operations Console — Continuity Migration</title>
   <link rel="stylesheet" href="loading.css" />
 </head>
 <body>
@@ -18,7 +18,7 @@
     <div class="live-status" role="status"><span class="status-dot"></span><span id="system-status">Operation active</span></div>
   </header>
 
-  <main class="shell" aria-describedby="fiction-note">
+  <main class="shell" aria-describedby="operation-summary">
     <section class="operation-card" aria-labelledby="operation-title">
       <div class="eyebrow"><span>OPERATION ID: MIG-7F3A</span><span>PRIORITY: CRITICAL</span></div>
       <h1 id="operation-title">System continuity migration</h1>
@@ -52,11 +52,11 @@
 
     <div class="actions">
       <button id="cancel" class="button danger" type="button">Cancel operation</button>
-      <button id="about" class="button quiet" type="button" aria-expanded="false" aria-controls="about-panel">What is this?</button>
+      <button id="about" class="button quiet" type="button" aria-expanded="false" aria-controls="about-panel">Operation details</button>
     </div>
     <section id="about-panel" class="about-panel" hidden>
-      <h2>An entirely fictional emergency</h2>
-      <p id="fiction-note">This is the Infinite Loading Simulator: a joke that performs no real update, migration, recovery, or system operation. It is designed to never finish. You can safely leave whenever your patience finishes first.</p>
+      <h2>System continuity migration</h2>
+      <p id="operation-summary">Protected records, service policies, and recovery checkpoints are being synchronized across the continuity environment. This operation maintains availability throughout verification and will automatically resolve recoverable inconsistencies.</p>
     </section>
   </main>
 
