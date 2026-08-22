@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://eripum9.github.io/sitemap.xml
+Sitemap: https://eripum9.github.io/sitemap.txt
