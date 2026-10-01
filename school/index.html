@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Schulprojekte</title>
+  <link rel="icon" href="assets/icons/sun.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-bar">
+      <a class="brand" href="./">Schulprojekte</a>
+      <div style="display:flex;align-items:center;gap:1rem">
+        <button id="theme-toggle" class="theme-toggle" aria-label="Farbschema umschalten" aria-pressed="false">
+          <img src="assets/icons/sun.svg" class="icon sun" alt="" aria-hidden="true"/>
+          <img src="assets/icons/moon.svg" class="icon moon" alt="" aria-hidden="true"/>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero card">
+      <h1>Schulprojekte</h1>
+      <p>Eine Sammlung meiner Schulprojekte.</p>
+    </section>
+
+    <!-- Projects list (styled like search results) -->
+    <section class="projects" role="list">
+      <div class="card project" role="listitem" style="--i:0">
+        <a class="project-link" href="Europa-Projekt/">
+          <img src="assets/images/europa-thumb.jpg" loading="lazy" width="320" height="180" class="project-thumb" alt="Europa‑Projekt Thumbnail" />
+          <div class="project-body">
+            <h2>Europa‑Projekt</h2>
+            <p class="project-desc">Diese Unterseite bündelt alle relevanten Links aus der Europaproject-Box sowie sämtliche zugehörigen Daten und bisherigen Arbeitsergebnisse. Sie dient als zentrale Übersicht und Dokumentation des aktuellen Projektstands.</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="card project" role="listitem" style="--i:1">
+        <a class="project-link" href="tiktok-algorithm/">
+          <img src="assets/images/tiktok-algorithm-thumb.jpg" loading="lazy" width="320" height="180" class="project-thumb" alt="TikTok Algorithm project thumbnail" />
+          <div class="project-body">
+            <h2>The TikTok Algorithm</h2>
+            <p class="project-desc">English school project about how TikTok's For You feed works, which signals the algorithm uses, and why short-video feeds can feel addictive.</p>
+          </div>
+        </a>
+      </div>
+
+
+
+    </section>
+
+  </main>
+
+  <footer class="site-footer"><small>© eripum9</small></footer>
+
+  <script src="js/theme.js"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Redirecting to PumpgunStudios</title>
+  <meta name="robots" content="noindex, follow" />
+  <link rel="canonical" href="https://pumpgunstudios.com/aboutme/" />
+  <meta http-equiv="refresh" content="0; url=https://pumpgunstudios.com/aboutme/" />
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #05070b;
+      --panel: #0d1520;
+      --text: #eff4fb;
+      --muted: #99a8bc;
+      --accent: #7dd3fc;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 1.5rem;
+      font-family: "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, rgba(125, 211, 252, 0.16), transparent 28%), var(--bg);
+      color: var(--text);
+    }
+
+    main {
+      width: min(34rem, 100%);
+      padding: 1.5rem;
+      border-radius: 18px;
+      background: rgba(13, 21, 32, 0.92);
+      border: 1px solid rgba(125, 211, 252, 0.16);
+      text-align: center;
+    }
+
+    p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    a {
+      color: var(--accent);
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Redirecting…</h1>
+    <p>This legacy About Me page has moved to <a href="https://pumpgunstudios.com/aboutme/">pumpgunstudios.com/aboutme/</a>.</p>
+  </main>
+  <script>
+    window.location.replace("https://pumpgunstudios.com/aboutme/" + window.location.search + window.location.hash);
+  </script>
+</body>
+</html>

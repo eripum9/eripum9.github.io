@@ -3,32 +3,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Marketplace - Amazify Wiki</title>
-  <meta name="description" content="Install, update, verify, and assess Amazify plugins from the in-app marketplace." />
-  <link rel="icon" href="../../images/logo.png" />
-  <link rel="stylesheet" href="/css/styles.css" />
-  <link rel="stylesheet" href="../wiki.css?v=1" />
+  <title>Redirecting to PumpgunStudios</title>
+  <meta name="robots" content="noindex, follow" />
+  <link rel="canonical" href="https://pumpgunstudios.com/Amazify/wiki/marketplace/" />
+  <meta http-equiv="refresh" content="0; url=https://pumpgunstudios.com/Amazify/wiki/marketplace/" />
+  <style>
+    :root { color-scheme: dark; --bg: #05070b; --panel: #0d1520; --text: #eff4fb; --muted: #99a8bc; --accent: #7dd3fc; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 1.5rem; font-family: "Segoe UI", sans-serif; background: radial-gradient(circle at top, rgba(125, 211, 252, 0.16), transparent 28%), var(--bg); color: var(--text); }
+    main { width: min(34rem, 100%); padding: 1.5rem; border-radius: 18px; background: rgba(13, 21, 32, 0.92); border: 1px solid rgba(125, 211, 252, 0.16); text-align: center; }
+    p { color: var(--muted); line-height: 1.7; }
+    a { color: var(--accent); font-weight: 700; }
+  </style>
 </head>
-<body class="amazify-wiki">
-  <header class="site-topbar"><div class="topbar-inner"><img src="/assets/images/logosmall.svg" class="topbar-logo" alt="PumpgunStudios" /><nav class="topbar-nav" aria-label="Main navigation"><a href="/">Home</a><a href="/aboutme/">About Me</a></nav></div></header>
-  <main class="wiki-shell wiki-layout">
-    <nav class="wiki-sidebar" aria-label="Amazify documentation"><span class="wiki-sidebar-label">Amazify Wiki</span><a href="../">Overview</a><a href="../getting-started/">Getting Started</a><a class="active" href="./">Marketplace</a><a href="../plugins/">Plugins</a><a href="../cli/">CLI</a><a href="../updates/">Updates</a><a href="../troubleshooting/">Troubleshooting</a><a href="../security/">Security</a><a href="../faq/">Q&amp;A</a></nav>
-    <article>
-      <a href="../" class="wiki-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>Wiki home</a>
-      <div class="wiki-kicker">Plugins</div>
-      <h1 class="wiki-article-title">Marketplace</h1>
-      <p class="wiki-lede">The in-app store installs catalog packages without bundling them into the application. It verifies identity and file integrity before anything reaches the plugin directory.</p>
-
-      <section class="wiki-section"><h2>Opening the marketplace</h2><p>Open the Amazify menu in Amazon Music and select <strong>Marketplace</strong>. Every opening refreshes the remote catalog and compares the catalog manifest version with each installed version.</p></section>
-      <section class="wiki-section"><h2>Package states</h2><ul><li><strong>Download</strong> means the package is not installed.</li><li><strong>Enable</strong> means it is installed but inactive.</li><li><strong>Disable</strong> removes its active runtime changes without deleting its files.</li><li><strong>Update</strong> means the catalog version is newer than the installed manifest.</li><li><strong>Reinstall</strong> downloads and verifies the currently listed package again.</li></ul></section>
-      <section class="wiki-section"><h2>What catalog verification checks</h2><p>The schema-v2 catalog identifies a source repository, immutable 40-character Git commit, plugin root, manifest, trust tier, and every expected file. Amazify derives raw GitHub URLs from this metadata and checks the SHA-256 and byte size of each response before staging installation.</p></section>
-      <div class="wiki-note"><strong>Integrity is not a security audit.</strong> A matching hash proves that downloaded bytes match the reviewed catalog entry. It does not prove that arbitrary JavaScript is safe for your account or Amazon Music session.</div>
-      <section class="wiki-section"><h2>Stock and community plugins</h2><p><strong>Stock</strong> means the exact catalog revision is maintained, reviewed, and tested with Amazify. It is not a formal audit or guarantee. Community plugins should be treated more cautiously: inspect their source, author, permissions, pinned commit, and update history before enabling them.</p></section>
-      <section class="wiki-section"><h2>Downloaded plugins start disabled</h2><p>Installation and execution are separate decisions. Amazify downloads a verified package, then waits for explicit enablement. This gives you a chance to review the package before its JavaScript runs in the Amazon Music renderer.</p></section>
-      <section class="wiki-section"><h2>Current stock catalog</h2><ul><li><strong>Signal Studio</strong> is a full-interface theme with a compact navigation rail, custom surfaces, responsive panels, and a floating transport.</li><li><strong>True Big Mode</strong> replaces Amazon Music Big Mode with synchronized lyrics, dynamic album-art ambience, playback controls, seeking, and a centered no-lyrics layout.</li></ul></section>
-      <section class="wiki-section"><h2>Plugin updates</h2><p>An update button appears when a refreshed catalog manifest has a newer semantic version than the installed plugin. The update is downloaded and validated through the same staged path as a fresh install. Application updates are separate.</p><p><a class="wiki-muted-link" href="../updates/">Compare plugin and application updates</a></p></section>
-    </article>
+<body>
+  <main>
+    <h1>Redirecting…</h1>
+    <p>This page has moved to <a href="https://pumpgunstudios.com/Amazify/wiki/marketplace/">https://pumpgunstudios.com/Amazify/wiki/marketplace/</a>.</p>
   </main>
-  <footer class="site-footer"><small>&copy; 2026 PumpgunStudios</small></footer>
+  <script>
+    window.location.replace("https://pumpgunstudios.com/Amazify/wiki/marketplace/" + window.location.search + window.location.hash);
+  </script>
 </body>
 </html>

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Asylpolitik in der EU</title>
+  <link rel="stylesheet" href="../../css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-bar">
+      <a class="brand" href="../">Europa‑Projekt</a>
+      <nav class="site-nav"><a href="../">Zurück</a></nav>
+      <div style="display:flex;align-items:center;gap:1rem">
+        <button id="theme-toggle" class="theme-toggle" aria-label="Farbschema umschalten" aria-pressed="false">
+          <img src="../../assets/icons/sun.svg" class="icon sun" alt="" aria-hidden="true"/>
+          <img src="../../assets/icons/moon.svg" class="icon moon" alt="" aria-hidden="true"/>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h1>Asylpolitik in der EU</h1>
+      <p>Diese Unterseite beschäftigt sich mit der Asylpolitik in der EU: rechtliche Rahmenbedingungen, aktuelle Entwicklungen, Statistiken und relevante Quellen. Ziel ist es, eine übersichtliche Sammlung von Hinweisen und Dokumenten zu bieten, die das Thema strukturieren und dokumentieren.</p>
+    </section>
+
+    <section class="card">
+      <h2>Ressourcen</h2>
+      <p>Sammlung von Quellen, Daten und weiterführenden Dokumenten zur Asyl- und Migrationspolitik in der EU.</p>
+    </section>
+
+    <section class="card" id="tabloid-preview">
+      <h2>Tabloid — Kurzformat (Pro / Contra)</h2>
+      <p class="muted">Kompakte Pro-/Contra-Übersicht. Vollständige Tabloid-Ansicht unten eingebettet.</p>
+      <iframe src="tabloid.html" title="Tabloid Pro/Contra" style="width:100%;height:640px;border:1px solid var(--muted);border-radius:6px;"></iframe>
+      <p><a href="tabloid.html">Vollständige Tabloid-Seite öffnen</a></p>
+    </section>
+
+    <section class="card fazit">
+      <h2>Gesamtfazit</h2>
+      <p>Die Asylpolitik in der EU steht zwischen humanitärer Verantwortung und realen Integrationskapazitäten. Kurzfristig sind abgestimmte Unterstützung und Lastenverteilung nötig; langfristig müssen Rechtssicherheit, Arbeitsmarktintegration und koordinierte Außenpolitik weiterentwickelt werden.</p>
+      <p class="muted">Quelle: Zusammengestellt als kompaktes Pro/Contra-Format zur Diskussion; weiterführende Links und Daten können in die Ressourcen-Sektion integriert werden.</p>
+    </section>
+
+    <section class="card sources" id="sources">
+      <button id="sources-toggle" class="sources-toggle" aria-expanded="false" aria-controls="sources-list">Quellen ▾</button>
+      <ul id="sources-list" class="sources-list" hidden>
+        <li><a href="https://www.cdu.de/aktuelles/cdu-deutschlands/wir-machen-schluss-mit-illegaler-migration/" target="_blank" rel="noopener noreferrer">CDU — Wir machen Schluss mit illegaler Migration</a></li>
+        <li><a href="https://www.eurotopics.net/de/349712/eu-staaten-vereinbaren-verschaerfung-der-asylpolitik" target="_blank" rel="noopener noreferrer">Eurotopics — EU-Staaten vereinbaren Verschärfung der Asylpolitik</a></li>
+        <li><a href="https://www.migazin.de/2025/11/12/eu-analyse-deutschland-asyl-reform-erheblich-profitieren/" target="_blank" rel="noopener noreferrer">Migazin — EU-Analyse: Deutschland profitiert</a></li>
+        <li><a href="https://www.proasyl.de/news/geas-umsetzung-in-deutschland-mit-voller-haerte/" target="_blank" rel="noopener noreferrer">Pro Asyl — GEAS-Umsetzung in Deutschland</a></li>
+        <li><a href="https://mediendienst-integration.de/news/warum-mehrere-eu-staaten-einen-notstand-ausrufen/" target="_blank" rel="noopener noreferrer">Mediendienst Integration — Warum mehrere EU-Staaten einen Notstand ausrufen</a></li>
+        <li><a href="https://www.zdfheute.de/politik/ausland/asylpolitik-asylreform-eu-innenminister-solidaritaetspool-100.html" target="_blank" rel="noopener noreferrer">ZDFheute — Asylpolitik: Asylreform und Solidaritätspool</a></li>
+        <li><a href="https://www.proasyl.de/news/wahlpruefsteine-2025-die-parteien-zu-flucht-und-asyl/" target="_blank" rel="noopener noreferrer">Pro Asyl — Wahlprüfsteine 2025</a></li>
+        <li><a href="https://www.bmi.bund.de/SharedDocs/schwerpunkte/DE/migrationspolitik/migrationspolitik.html" target="_blank" rel="noopener noreferrer">Bundesministerium des Innern — Migrationspolitik</a></li>
+        <li><a href="https://www.tagesschau.de/ausland/europa/daenemark-asylpolitik-100.html" target="_blank" rel="noopener noreferrer">Tagesschau — Dänemark Asylpolitik</a></li>
+        <li><a href="https://mediendienst-integration.de/news/migration-und-migrationspolitik-in-frankreich/" target="_blank" rel="noopener noreferrer">Mediendienst Integration — Migration in Frankreich</a></li>
+        <li><a href="https://www.bpb.de/themen/migration-integration/kurzdossiers/556185/frankreich-und-die-einwanderung/" target="_blank" rel="noopener noreferrer">BPB — Frankreich und die Einwanderung</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer"><small>© eripum9</small></footer>
+  <script src="../../js/theme.js"></script>
+  <script>
+    (function(){
+      const btn = document.getElementById('sources-toggle');
+      const list = document.getElementById('sources-list');
+      if(!btn || !list) return;
+      btn.addEventListener('click', ()=>{
+        const open = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!open));
+        list.hidden = open;
+        btn.innerText = open ? 'Quellen ▾' : 'Quellen ▴';
+      });
+    })();
+  </script>
+</body>
+</html>

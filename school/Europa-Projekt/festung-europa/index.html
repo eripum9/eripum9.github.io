@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Festung Europa? — Warum die EU an ihrer Asylpolitik scheitert</title>
+  <link rel="stylesheet" href="../../css/styles.css" />
+  <style>
+    /* ── Video Player — Blue-themed YouTube-style ── */
+    .vp{--vp-accent:#3b82f6;--vp-accent-hover:#2563eb;--vp-bg:#000;--vp-controls:#0d0d0d;--vp-text:#fff;--vp-muted:#a1a1aa;--vp-bar-bg:rgba(255,255,255,.2);--vp-bar-buf:rgba(255,255,255,.35);position:relative;max-width:1000px;margin:0 auto;border-radius:10px;overflow:hidden;background:var(--vp-bg);aspect-ratio:16/9;user-select:none;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+    .vp video{width:100%;height:100%;display:block;object-fit:contain;background:#000}
+
+    /* Big play overlay */
+    .vp-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45);cursor:pointer;z-index:5;transition:opacity .2s}
+    .vp-overlay.hidden{opacity:0;pointer-events:none}
+    .vp-overlay svg{width:72px;height:72px;fill:var(--vp-accent);filter:drop-shadow(0 2px 8px rgba(0,0,0,.5));transition:transform .15s}
+    .vp-overlay:hover svg{transform:scale(1.1)}
+
+    /* Controls bar */
+    .vp-controls{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.85));padding:0 .5rem .4rem;z-index:10;opacity:0;transition:opacity .25s}
+    .vp:hover .vp-controls,.vp.paused .vp-controls,.vp.seeking .vp-controls{opacity:1}
+
+    /* Progress bar */
+    .vp-progress{position:relative;width:100%;height:4px;background:var(--vp-bar-bg);cursor:pointer;border-radius:2px;margin-bottom:.35rem;transition:height .12s}
+    .vp:hover .vp-progress,.vp.seeking .vp-progress{height:6px}
+    .vp-progress-buf{position:absolute;top:0;left:0;height:100%;background:var(--vp-bar-buf);border-radius:2px;pointer-events:none}
+    .vp-progress-fill{position:absolute;top:0;left:0;height:100%;background:var(--vp-accent);border-radius:2px;pointer-events:none}
+    .vp-progress-thumb{position:absolute;top:50%;width:14px;height:14px;background:var(--vp-accent);border-radius:50%;transform:translate(-50%,-50%);opacity:0;transition:opacity .12s;pointer-events:none;box-shadow:0 0 4px rgba(0,0,0,.5)}
+    .vp:hover .vp-progress-thumb,.vp.seeking .vp-progress-thumb{opacity:1}
+    .vp-progress-tooltip{position:absolute;bottom:14px;transform:translateX(-50%);background:#222;color:#fff;font-size:.7rem;padding:2px 6px;border-radius:3px;pointer-events:none;opacity:0;transition:opacity .12s;white-space:nowrap}
+    .vp-progress:hover .vp-progress-tooltip{opacity:1}
+
+    /* Button row */
+    .vp-row{display:flex;align-items:center;gap:.35rem;color:var(--vp-text);font-size:.8rem}
+    .vp-left{flex:1;display:flex;align-items:center;gap:.35rem}
+    .vp-right{display:flex;align-items:center;gap:.35rem}
+
+    .vp-btn{background:none;border:0;color:var(--vp-text);cursor:pointer;padding:4px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;transition:background .12s}
+    .vp-btn:hover{background:rgba(255,255,255,.15)}
+    .vp-btn svg{width:22px;height:22px;fill:currentColor}
+    .vp-time{font-size:.78rem;color:var(--vp-muted);margin:0 .3rem;white-space:nowrap;font-variant-numeric:tabular-nums}
+
+    /* Volume slider */
+    .vp-vol-wrap{display:flex;align-items:center;gap:0}
+    .vp-vol-slider{width:0;overflow:hidden;transition:width .2s;appearance:none;height:3px;background:var(--vp-bar-bg);border-radius:2px;cursor:pointer;margin:0}
+    .vp-vol-wrap:hover .vp-vol-slider{width:60px;margin-left:4px}
+    .vp-vol-slider::-webkit-slider-thumb{appearance:none;width:12px;height:12px;background:var(--vp-text);border-radius:50%;cursor:pointer}
+    .vp-vol-slider::-moz-range-thumb{width:12px;height:12px;background:var(--vp-text);border-radius:50%;border:0;cursor:pointer}
+
+    /* Menus (settings, speed, quality, subtitles) */
+    .vp-menu{position:absolute;bottom:44px;right:6px;background:#1a1a1a;border-radius:8px;padding:.3rem 0;min-width:160px;box-shadow:0 4px 16px rgba(0,0,0,.5);z-index:20;display:none;color:var(--vp-text);font-size:.8rem}
+    .vp-menu.show{display:block}
+    .vp-menu-item{display:flex;align-items:center;gap:.5rem;padding:.45rem .8rem;cursor:pointer;transition:background .1s;white-space:nowrap}
+    .vp-menu-item:hover{background:rgba(255,255,255,.1)}
+    .vp-menu-item.active{color:var(--vp-accent)}
+    .vp-menu-item.active::before{content:'✓';color:var(--vp-accent);font-weight:700;width:14px;text-align:center}
+    .vp-menu-item:not(.active)::before{content:'';width:14px;display:inline-block}
+    .vp-menu-header{padding:.35rem .8rem;color:var(--vp-muted);font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:.15rem}
+    .vp-menu-back{padding:.4rem .8rem;cursor:pointer;display:flex;align-items:center;gap:.4rem;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:.15rem;font-weight:500}
+    .vp-menu-back:hover{background:rgba(255,255,255,.08)}
+    .vp-menu-back svg{width:16px;height:16px;fill:currentColor}
+
+    /* Subtitle display */
+    .vp-subs{position:absolute;bottom:56px;left:50%;transform:translateX(-50%);text-align:center;pointer-events:none;z-index:8;max-width:80%}
+    .vp-sub-line{display:inline-block;background:rgba(0,0,0,.75);color:#fff;padding:2px 8px;border-radius:4px;font-size:.95rem;line-height:1.4}
+
+    /* Placeholder poster */
+    .vp-poster{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 50%,#0f172a 100%);color:var(--vp-text);z-index:3;pointer-events:none}
+    .vp-poster.hidden{display:none}
+    .vp-poster-title{font-size:1.2rem;font-weight:700;margin-top:.5rem;text-align:center;padding:0 1rem;text-shadow:0 2px 6px rgba(0,0,0,.6)}
+    .vp-poster-sub{font-size:.8rem;color:var(--vp-muted);margin-top:.25rem}
+    .vp-poster svg{width:60px;height:60px;fill:var(--vp-accent);opacity:.6}
+
+    @media(max-width:600px){
+      .vp-btn svg{width:18px;height:18px}
+      .vp-time{font-size:.7rem}
+      .vp-poster-title{font-size:.95rem}
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-bar">
+      <a class="brand" href="../">Europa‑Projekt</a>
+      <nav class="site-nav"><a href="../">Zurück</a></nav>
+      <div style="display:flex;align-items:center;gap:1rem">
+        <button id="theme-toggle" class="theme-toggle" aria-label="Farbschema umschalten" aria-pressed="false">
+          <img src="../../assets/icons/sun.svg" class="icon sun" alt="" aria-hidden="true"/>
+          <img src="../../assets/icons/moon.svg" class="icon moon" alt="" aria-hidden="true"/>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h1>Festung Europa? — Warum die EU an ihrer Asylpolitik scheitert</h1>
+      <p class="lede">Kurzdokumentation: Von den Anfängen des Gemeinsamen Europäischen Asylsystems über die Krise von 2015 bis zur Verschärfung 2025 — warum Europa an einer gemeinsamen Asylpolitik scheitert.</p>
+    </section>
+
+    <!-- ── Video Player ── -->
+    <section class="card" style="padding:0;overflow:hidden;border-radius:10px">
+      <div class="vp paused" id="vp">
+        <video id="vp-video" preload="metadata" playsinline>
+          <!-- Placeholder: replace src with your actual video file -->
+          <source src="placeholder.mp4" type="video/mp4" />
+          <!-- Subtitle track -->
+          <track label="Deutsch" kind="subtitles" srclang="de" src="subs-de.vtt" default />
+        </video>
+
+        <!-- Poster overlay -->
+        <div class="vp-poster" id="vp-poster">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z" fill="none"/><path d="M21 3H3a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zm-1 16H4V5h16v14z"/><path d="m10 8 6 4-6 4V8z"/></svg>
+          <div class="vp-poster-title">Festung Europa?</div>
+          <div class="vp-poster-sub">Placeholder — Video wird noch hinzugefügt</div>
+        </div>
+
+        <!-- Big play button overlay -->
+        <div class="vp-overlay" id="vp-overlay">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+
+        <!-- Subtitle display area -->
+        <div class="vp-subs" id="vp-subs"></div>
+
+        <!-- Controls -->
+        <div class="vp-controls">
+          <!-- Progress bar -->
+          <div class="vp-progress" id="vp-progress">
+            <div class="vp-progress-buf" id="vp-buf"></div>
+            <div class="vp-progress-fill" id="vp-fill"></div>
+            <div class="vp-progress-thumb" id="vp-thumb"></div>
+            <div class="vp-progress-tooltip" id="vp-tip">0:00</div>
+          </div>
+          <!-- Button row -->
+          <div class="vp-row">
+            <div class="vp-left">
+              <!-- Play/Pause -->
+              <button class="vp-btn" id="vp-play" aria-label="Abspielen">
+                <svg id="vp-icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                <svg id="vp-icon-pause" viewBox="0 0 24 24" style="display:none"><path d="M6 4h4v16H6zm8 0h4v16h-4z"/></svg>
+              </button>
+              <!-- Next (skip 10s) -->
+              <button class="vp-btn" id="vp-fwd" aria-label="10 Sekunden vorspulen">
+                <svg viewBox="0 0 24 24"><path d="M18 13a6 6 0 1 1-2-4.47V5h2v6h-6V9h3.03A4 4 0 1 0 18 13z"/></svg>
+              </button>
+              <!-- Volume -->
+              <div class="vp-vol-wrap">
+                <button class="vp-btn" id="vp-mute" aria-label="Stummschalten">
+                  <svg id="vp-icon-vol" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8.14v7.72c1.48-.73 2.5-2.25 2.5-3.86zM14 3.23v2.06a6.51 6.51 0 0 1 0 13.42v2.06A8.5 8.5 0 0 0 14 3.23z"/></svg>
+                  <svg id="vp-icon-mute" viewBox="0 0 24 24" style="display:none"><path d="M3 9v6h4l5 5V4L7 9H3zm13 3 3.6-3.6 1.4 1.4L17.4 12l3.6 3.6-1.4 1.4L16 13.4l-3.6 3.6-1.4-1.4L14.6 12 11 8.4l1.4-1.4L16 10.6z"/></svg>
+                </button>
+                <input type="range" class="vp-vol-slider" id="vp-vol" min="0" max="1" step="0.05" value="1" aria-label="Lautstärke" />
+              </div>
+              <!-- Time -->
+              <span class="vp-time" id="vp-time">0:00 / 0:00</span>
+            </div>
+            <div class="vp-right">
+              <!-- Subtitles -->
+              <button class="vp-btn" id="vp-cc" aria-label="Untertitel">
+                <svg viewBox="0 0 24 24" style="vertical-align:middle"><rect x="2" y="4" width="20" height="16" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="1.8"/><text x="7.2" y="15" font-size="8" font-weight="700" font-family="sans-serif" fill="currentColor">CC</text></svg>
+              </button>
+              <!-- Settings gear -->
+              <button class="vp-btn" id="vp-settings" aria-label="Einstellungen">
+                <svg viewBox="0 0 24 24"><path d="M19.14 12.94a7.07 7.07 0 0 0 .06-.94c0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96a7.04 7.04 0 0 0-1.62-.94l-.36-2.54a.48.48 0 0 0-.48-.41h-3.84a.48.48 0 0 0-.48.41l-.36 2.54a7.04 7.04 0 0 0-1.62.94l-2.39-.96a.49.49 0 0 0-.59.22L2.74 8.87a.48.48 0 0 0 .12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.04.7 1.62.94l.36 2.54c.05.24.26.41.48.41h3.84c.24 0 .44-.17.48-.41l.36-2.54a7.04 7.04 0 0 0 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.49.49 0 0 0-.12-.61l-2.03-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg>
+              </button>
+              <!-- Fullscreen -->
+              <button class="vp-btn" id="vp-fs" aria-label="Vollbild">
+                <svg id="vp-icon-fs-enter" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+                <svg id="vp-icon-fs-exit" viewBox="0 0 24 24" style="display:none"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Settings menu (hidden by default) -->
+        <div class="vp-menu" id="vp-menu-main">
+          <div class="vp-menu-item" data-open="speed">Wiedergabegeschwindigkeit <span style="margin-left:auto;color:var(--vp-muted)" id="vp-speed-label">Normal</span></div>
+          <div class="vp-menu-item" data-open="quality">Qualität <span style="margin-left:auto;color:var(--vp-muted)" id="vp-quality-label">Auto</span></div>
+        </div>
+
+        <!-- Speed sub-menu -->
+        <div class="vp-menu" id="vp-menu-speed">
+          <div class="vp-menu-back" data-back="main"><svg viewBox="0 0 24 24"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg> Geschwindigkeit</div>
+          <div class="vp-menu-item" data-speed="0.25">0.25x</div>
+          <div class="vp-menu-item" data-speed="0.5">0.5x</div>
+          <div class="vp-menu-item" data-speed="0.75">0.75x</div>
+          <div class="vp-menu-item active" data-speed="1">Normal</div>
+          <div class="vp-menu-item" data-speed="1.25">1.25x</div>
+          <div class="vp-menu-item" data-speed="1.5">1.5x</div>
+          <div class="vp-menu-item" data-speed="1.75">1.75x</div>
+          <div class="vp-menu-item" data-speed="2">2x</div>
+        </div>
+
+        <!-- Quality sub-menu -->
+        <div class="vp-menu" id="vp-menu-quality">
+          <div class="vp-menu-back" data-back="main"><svg viewBox="0 0 24 24"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg> Qualität</div>
+          <div class="vp-menu-item" data-quality="1440">1440p (QHD)</div>
+          <div class="vp-menu-item" data-quality="1080">1080p (HD)</div>
+          <div class="vp-menu-item" data-quality="720">720p</div>
+          <div class="vp-menu-item" data-quality="480">480p</div>
+          <div class="vp-menu-item" data-quality="360">360p</div>
+          <div class="vp-menu-item active" data-quality="auto">Auto</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Über dieses Video</h2>
+      <p>Diese Kurzdokumentation beleuchtet die Frage, warum die Europäische Union seit Jahrzehnten an einer gemeinsamen Asylpolitik scheitert. Von den Anfängen des Schengen-Raums und des Dubliner Übereinkommens über den Stresstest der sogenannten „Flüchtlingskrise" 2015 bis zur drastischen Verschärfung der Asylpolitik in Deutschland und anderen EU-Staaten im Jahr 2025.</p>
+      <p>Das Video zeigt den Widerspruch zwischen dem Versprechen europäischer Solidarität und der Realität nationaler Alleingänge, steigender Abschottung und wachsender Menschenrechtskritik — sachlich, faktenbasiert und hinterfragend.</p>
+    </section>
+
+    <section class="card">
+      <h2>Kapitelübersicht</h2>
+      <ol>
+        <li><strong>Cold Open</strong> — 1,3 Millionen vs. 157.000: Wie sich die Zahlen verändert haben</li>
+        <li><strong>„Ein Raum der Freiheit"</strong> — Schengen, Dublin, GEAS: Wie alles begann</li>
+        <li><strong>2015: Der Stresstest</strong> — Syrienkrieg, Dublin-Kollaps, gescheiterte Quotenverteilung</li>
+        <li><strong>Der Neue Pakt</strong> — Grenzverfahren, Return Hubs, Solidaritätsmechanismus</li>
+        <li><strong>Deutschland 2025</strong> — Zurückweisungen, Abschiebungsrekorde, das Afghan-Phänomen</li>
+        <li><strong>Der Preis der Härte</strong> — UN-Rüge, Gerichtsurteile, Integrationspolitik unter Druck</li>
+        <li><strong>Europa im Vergleich</strong> — Dänemark, Niederlande, Frankreich, Schweden, Ungarn/Polen</li>
+        <li><strong>Pushbacks</strong> — Illegale Zurückweisungen an den EU-Außengrenzen</li>
+        <li><strong>Fazit</strong> — Wertegemeinschaft oder Festung?</li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>Weiterführende Ressourcen</h2>
+      <p>Siehe auch: <a href="../asylpolitik/">Asylpolitik</a>, <a href="../asyl-de2025/">Die Asyllage in Deutschland 2025</a>, <a href="../asyl-euweit/">Sollte es eine EU-weite Asylpolitik geben?</a> und das <a href="../asylpolitik/tabloid.html">Tabloid (Pro/Contra)</a>.</p>
+    </section>
+
+    <section class="card sources" id="sources">
+      <button id="sources-toggle" class="sources-toggle" aria-expanded="false" aria-controls="sources-list">Quellen ▾</button>
+      <ul id="sources-list" class="sources-list" hidden>
+        <li><strong>Deutschland — Zahlen, Politik &amp; Recht</strong></li>
+        <li><a href="https://www.bpb.de/themen/migration-integration/zahlen-zu-asyl/265708/asylantraege-in-deutschland/" target="_blank" rel="noopener noreferrer">bpb — Asylanträge in Deutschland</a></li>
+        <li><a href="https://www.bamf.de/SharedDocs/Meldungen/DE/2025/251203-am-asylzahlen-november-2025.html" target="_blank" rel="noopener noreferrer">BAMF — Asylzahlen November 2025</a></li>
+        <li><a href="https://www.bundestag.de/dokumente/textarchiv/2025/kw49-de-herkunftsstaaten-1128486" target="_blank" rel="noopener noreferrer">Bundestag — Herkunftsstaaten 2025</a></li>
+        <li><a href="https://www.tagesschau.de/inland/abschiebungen-bundesregierung-100.html" target="_blank" rel="noopener noreferrer">Tagesschau — Abschiebungen Bundesregierung</a></li>
+        <li><a href="https://www.zdfheute.de/politik/deutschland/abschiebungen-migration-ausweisungen-2025-100.html" target="_blank" rel="noopener noreferrer">ZDFheute — Abschiebungen 2025</a></li>
+        <li><a href="https://www.mdr.de/nachrichten/deutschland/politik/asylunterkuenfte-asyl-kosten-asylbewerber-sachsen-anhalt-thueringen-100.html" target="_blank" rel="noopener noreferrer">MDR — Asylunterkünfte und Kosten</a></li>
+
+        <li><strong>Menschenrechte &amp; Kritik</strong></li>
+        <li><a href="https://www.proasyl.de/news/der-anti-integrationshaushalt-der-ampel-regierung/" target="_blank" rel="noopener noreferrer">Pro Asyl — Anti-Integrationshaushalt</a></li>
+        <li><a href="https://www.proasyl.de/news/un-ruegt-deutschland-gegen-soziale-menschenrechte-verstossen/" target="_blank" rel="noopener noreferrer">Pro Asyl — UN rügt Deutschland</a></li>
+        <li><a href="https://www.institut-fuer-menschenrechte.de/aktuelles/detail/menschenrechtsinstitut-kritisiert-geplante-freiheitsbeschraenkungen-fuer-gefluechtete" target="_blank" rel="noopener noreferrer">Deutsches Institut für Menschenrechte — Kritik</a></li>
+        <li><a href="https://taz.de/Heftige-Kritik-an-der-Bundesregierung/!6135867/" target="_blank" rel="noopener noreferrer">taz — Heftige Kritik an der Bundesregierung</a></li>
+
+        <li><strong>EU-Ebene — Reform, Pakt &amp; Ländervergleiche</strong></li>
+        <li><a href="https://www.europaimunterricht.de/fluechtlings-migrations-asyl-politik" target="_blank" rel="noopener noreferrer">Europa im Unterricht (LpB BW) — Migrations- und Asylpolitik der EU</a></li>
+        <li><a href="https://www.dw.com/de/eu-innenminister-schaerfere-asylregeln-rueckfuehrung-migranten-asylbewerber/a-75062808" target="_blank" rel="noopener noreferrer">DW — EU-Innenminister: schärfere Asylregeln</a></li>
+        <li><a href="https://www.faz.net/aktuell/politik/ausland/eu-asylreform-erstmals-auf-entlastung-von-staaten-an-aussengrenze-verstaendigt-accg-110803088.html" target="_blank" rel="noopener noreferrer">FAZ — EU-Asylreform: Entlastung Außengrenzen</a></li>
+        <li><a href="https://www.tagesschau.de/ausland/europa/eu-innenminister-asylpaket-einigung-100.html" target="_blank" rel="noopener noreferrer">Tagesschau — EU-Innenminister: Asylpaket-Einigung</a></li>
+        <li><a href="https://www.bmi.bund.de/SharedDocs/kurzmeldungen/DE/2025/12/ji-rat-1225.html" target="_blank" rel="noopener noreferrer">BMI — Innenministerrat (12/2025)</a></li>
+        <li><a href="https://www.eurotopics.net/de/349712/eu-staaten-vereinbaren-verschaerfung-der-asylpolitik" target="_blank" rel="noopener noreferrer">Eurotopics — EU-Verschärfung der Asylpolitik</a></li>
+        <li><a href="https://www.migazin.de/2025/11/12/eu-analyse-deutschland-asyl-reform-erheblich-profitieren/" target="_blank" rel="noopener noreferrer">Migazin — EU-Analyse: Deutschland profitiert</a></li>
+        <li><a href="https://www.proasyl.de/news/geas-umsetzung-in-deutschland-mit-voller-haerte/" target="_blank" rel="noopener noreferrer">Pro Asyl — GEAS-Umsetzung in Deutschland</a></li>
+        <li><a href="https://mediendienst-integration.de/news/warum-mehrere-eu-staaten-einen-notstand-ausrufen/" target="_blank" rel="noopener noreferrer">Mediendienst Integration — Notstand in EU-Staaten</a></li>
+        <li><a href="https://www.zdfheute.de/politik/ausland/asylpolitik-asylreform-eu-innenminister-solidaritaetspool-100.html" target="_blank" rel="noopener noreferrer">ZDFheute — Asylreform und Solidaritätspool</a></li>
+        <li><a href="https://www.bmi.bund.de/SharedDocs/schwerpunkte/DE/migrationspolitik/migrationspolitik.html" target="_blank" rel="noopener noreferrer">BMI — Migrationspolitik</a></li>
+
+        <li><strong>Länderspezifisch</strong></li>
+        <li><a href="https://www.tagesschau.de/ausland/europa/daenemark-asylpolitik-100.html" target="_blank" rel="noopener noreferrer">Tagesschau — Dänemark Asylpolitik</a></li>
+        <li><a href="https://mediendienst-integration.de/news/migration-und-migrationspolitik-in-frankreich/" target="_blank" rel="noopener noreferrer">Mediendienst Integration — Frankreich</a></li>
+        <li><a href="https://www.bpb.de/themen/migration-integration/kurzdossiers/556185/frankreich-und-die-einwanderung/" target="_blank" rel="noopener noreferrer">bpb — Frankreich und die Einwanderung</a></li>
+        <li><a href="https://www.cdu.de/aktuelles/cdu-deutschlands/wir-machen-schluss-mit-illegaler-migration/" target="_blank" rel="noopener noreferrer">CDU — Schluss mit illegaler Migration</a></li>
+        <li><a href="https://www.proasyl.de/news/wahlpruefsteine-2025-die-parteien-zu-flucht-und-asyl/" target="_blank" rel="noopener noreferrer">Pro Asyl — Wahlprüfsteine 2025</a></li>
+
+        <li><strong>Hintergrund &amp; Recherche</strong></li>
+        <li><a href="https://www.tagesschau.de/ausland/europa/eu-asylreform-zypern-100.html" target="_blank" rel="noopener noreferrer">Tagesschau — EU-Asylreform: Beratungen auf Zypern</a></li>
+        <li>WDR Monitor — „Verbotene Orte: Europas düstere Flüchtlingspolitik" (08.12.2022)</li>
+        <li>Ivan Krastev — <em>Europadämmerung</em>. Suhrkamp, 2017</li>
+        <li>Gerald Knaus — <em>Welche Grenzen brauchen wir?</em> Piper, 2020</li>
+        <li>Sachverständigenrat für Integration und Migration (SVR) — <a href="https://www.svr-migration.de/" target="_blank" rel="noopener noreferrer">svr-migration.de</a></li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer class="site-footer"><small>© eripum9</small></footer>
+  <script src="../../js/theme.js"></script>
+
+  <!-- ── Video Player JS ── -->
+  <script>
+  (function(){
+    const vp    = document.getElementById('vp');
+    const vid   = document.getElementById('vp-video');
+    const overlay = document.getElementById('vp-overlay');
+    const poster  = document.getElementById('vp-poster');
+
+    // Controls
+    const playBtn = document.getElementById('vp-play');
+    const fwdBtn  = document.getElementById('vp-fwd');
+    const muteBtn = document.getElementById('vp-mute');
+    const volSlider = document.getElementById('vp-vol');
+    const timeEl  = document.getElementById('vp-time');
+    const ccBtn   = document.getElementById('vp-cc');
+    const settingsBtn = document.getElementById('vp-settings');
+    const fsBtn   = document.getElementById('vp-fs');
+
+    // Icons
+    const iconPlay  = document.getElementById('vp-icon-play');
+    const iconPause = document.getElementById('vp-icon-pause');
+    const iconVol   = document.getElementById('vp-icon-vol');
+    const iconMute  = document.getElementById('vp-icon-mute');
+    const iconFsIn  = document.getElementById('vp-icon-fs-enter');
+    const iconFsOut = document.getElementById('vp-icon-fs-exit');
+
+    // Progress
+    const progressBar = document.getElementById('vp-progress');
+    const fillEl = document.getElementById('vp-fill');
+    const bufEl  = document.getElementById('vp-buf');
+    const thumbEl = document.getElementById('vp-thumb');
+    const tipEl  = document.getElementById('vp-tip');
+
+    // Subtitles
+    const subsEl = document.getElementById('vp-subs');
+
+    // Menus
+    const menuMain    = document.getElementById('vp-menu-main');
+    const menuSpeed   = document.getElementById('vp-menu-speed');
+    const menuQuality = document.getElementById('vp-menu-quality');
+    const speedLabel  = document.getElementById('vp-speed-label');
+    const qualityLabel = document.getElementById('vp-quality-label');
+
+    let seeking = false;
+    let subtitlesOn = true;
+
+    // ── Helpers ──
+    function fmt(s){
+      if(isNaN(s)||!isFinite(s)) return '0:00';
+      const m=Math.floor(s/60), sec=Math.floor(s%60);
+      return m+':'+(sec<10?'0':'')+sec;
+    }
+
+    function updatePlayState(){
+      const paused = vid.paused;
+      iconPlay.style.display  = paused ? '' : 'none';
+      iconPause.style.display = paused ? 'none' : '';
+      vp.classList.toggle('paused', paused);
+    }
+
+    function updateVolIcons(){
+      const muted = vid.muted || vid.volume === 0;
+      iconVol.style.display  = muted ? 'none' : '';
+      iconMute.style.display = muted ? '' : 'none';
+    }
+
+    function updateProgress(){
+      if(!vid.duration) return;
+      const pct = (vid.currentTime / vid.duration) * 100;
+      fillEl.style.width = pct + '%';
+      thumbEl.style.left = pct + '%';
+      timeEl.textContent = fmt(vid.currentTime) + ' / ' + fmt(vid.duration);
+    }
+
+    function updateBuffer(){
+      if(!vid.duration || !vid.buffered.length) return;
+      const end = vid.buffered.end(vid.buffered.length - 1);
+      bufEl.style.width = (end / vid.duration * 100) + '%';
+    }
+
+    // ── Play / Pause ──
+    function togglePlay(){
+      if(vid.paused){ vid.play(); poster.classList.add('hidden'); }
+      else vid.pause();
+    }
+    overlay.addEventListener('click', togglePlay);
+    playBtn.addEventListener('click', togglePlay);
+    vid.addEventListener('click', togglePlay);
+    vid.addEventListener('play',  ()=>{ overlay.classList.add('hidden'); updatePlayState(); });
+    vid.addEventListener('pause', ()=>{ overlay.classList.remove('hidden'); updatePlayState(); });
+
+    // ── Forward 10s ──
+    fwdBtn.addEventListener('click', ()=>{ vid.currentTime = Math.min(vid.duration, vid.currentTime + 10); });
+
+    // ── Volume ──
+    muteBtn.addEventListener('click', ()=>{ vid.muted = !vid.muted; updateVolIcons(); });
+    volSlider.addEventListener('input', ()=>{
+      vid.volume = parseFloat(volSlider.value);
+      vid.muted = vid.volume === 0;
+      updateVolIcons();
+    });
+
+    // ── Time / Progress ──
+    vid.addEventListener('timeupdate', updateProgress);
+    vid.addEventListener('progress', updateBuffer);
+    vid.addEventListener('loadedmetadata', ()=>{ timeEl.textContent = '0:00 / ' + fmt(vid.duration); });
+
+    // ── Seeking (drag progress bar) ──
+    function seekFromEvent(e){
+      const rect = progressBar.getBoundingClientRect();
+      const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      if(vid.duration) vid.currentTime = pct * vid.duration;
+    }
+    function showTooltip(e){
+      const rect = progressBar.getBoundingClientRect();
+      const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      const t = vid.duration ? pct * vid.duration : 0;
+      tipEl.textContent = fmt(t);
+      tipEl.style.left = (pct * 100) + '%';
+    }
+    progressBar.addEventListener('mousemove', showTooltip);
+    progressBar.addEventListener('mousedown', (e)=>{
+      seeking = true; vp.classList.add('seeking');
+      seekFromEvent(e);
+    });
+    document.addEventListener('mousemove', (e)=>{ if(seeking) seekFromEvent(e); });
+    document.addEventListener('mouseup', ()=>{ if(seeking){ seeking = false; vp.classList.remove('seeking'); }});
+
+    // Touch support for progress bar
+    progressBar.addEventListener('touchstart', (e)=>{
+      seeking = true; vp.classList.add('seeking');
+      seekFromEvent(e.touches[0]);
+    }, {passive:true});
+    document.addEventListener('touchmove', (e)=>{ if(seeking) seekFromEvent(e.touches[0]); }, {passive:true});
+    document.addEventListener('touchend', ()=>{ if(seeking){ seeking = false; vp.classList.remove('seeking'); }});
+
+    // ── Fullscreen ──
+    fsBtn.addEventListener('click', ()=>{
+      if(!document.fullscreenElement) vp.requestFullscreen().catch(()=>{});
+      else document.exitFullscreen();
+    });
+    document.addEventListener('fullscreenchange', ()=>{
+      const fs = !!document.fullscreenElement;
+      iconFsIn.style.display  = fs ? 'none' : '';
+      iconFsOut.style.display = fs ? '' : 'none';
+    });
+
+    // ── Subtitles ──
+    function initSubs(){
+      for(let i = 0; i < vid.textTracks.length; i++){
+        vid.textTracks[i].mode = subtitlesOn ? 'hidden' : 'disabled';
+      }
+    }
+    vid.addEventListener('loadedmetadata', initSubs);
+    // Render cues manually for styled display
+    function renderCues(){
+      if(!subtitlesOn){ subsEl.innerHTML = ''; return; }
+      let html = '';
+      for(let i = 0; i < vid.textTracks.length; i++){
+        const track = vid.textTracks[i];
+        if(track.mode === 'disabled') continue;
+        if(!track.activeCues) continue;
+        for(let j = 0; j < track.activeCues.length; j++){
+          html += '<span class="vp-sub-line">' + track.activeCues[j].text + '</span><br/>';
+        }
+      }
+      subsEl.innerHTML = html;
+    }
+    vid.addEventListener('timeupdate', renderCues);
+    ccBtn.addEventListener('click', ()=>{
+      subtitlesOn = !subtitlesOn;
+      ccBtn.style.color = subtitlesOn ? 'var(--vp-accent)' : 'var(--vp-text)';
+      for(let i = 0; i < vid.textTracks.length; i++){
+        vid.textTracks[i].mode = subtitlesOn ? 'hidden' : 'disabled';
+      }
+      if(!subtitlesOn) subsEl.innerHTML = '';
+    });
+
+    // ── Menus ──
+    function closeAllMenus(){ menuMain.classList.remove('show'); menuSpeed.classList.remove('show'); menuQuality.classList.remove('show'); }
+    settingsBtn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const open = menuMain.classList.contains('show');
+      closeAllMenus();
+      if(!open) menuMain.classList.add('show');
+    });
+    document.addEventListener('click', (e)=>{
+      if(!e.target.closest('.vp-menu') && !e.target.closest('#vp-settings')) closeAllMenus();
+    });
+
+    // Sub-menu navigation
+    menuMain.querySelectorAll('[data-open]').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        closeAllMenus();
+        const target = document.getElementById('vp-menu-' + el.dataset.open);
+        if(target) target.classList.add('show');
+      });
+    });
+    document.querySelectorAll('[data-back]').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        closeAllMenus();
+        const target = document.getElementById('vp-menu-' + el.dataset.back);
+        if(target) target.classList.add('show');
+      });
+    });
+
+    // Speed selection
+    menuSpeed.querySelectorAll('[data-speed]').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        const rate = parseFloat(el.dataset.speed);
+        vid.playbackRate = rate;
+        menuSpeed.querySelectorAll('[data-speed]').forEach(s=>s.classList.remove('active'));
+        el.classList.add('active');
+        speedLabel.textContent = rate === 1 ? 'Normal' : rate + 'x';
+        closeAllMenus();
+      });
+    });
+
+    // Quality selection (visual only — single source; swap src if multiple sources available)
+    menuQuality.querySelectorAll('[data-quality]').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        menuQuality.querySelectorAll('[data-quality]').forEach(q=>q.classList.remove('active'));
+        el.classList.add('active');
+        const q = el.dataset.quality;
+        qualityLabel.textContent = q === 'auto' ? 'Auto' : q + 'p';
+        closeAllMenus();
+        // In a real implementation, swap video source here based on quality
+      });
+    });
+
+    // ── Keyboard shortcuts ──
+    document.addEventListener('keydown', (e)=>{
+      if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      switch(e.key){
+        case ' ': case 'k': e.preventDefault(); togglePlay(); break;
+        case 'ArrowRight': e.preventDefault(); vid.currentTime = Math.min(vid.duration||0, vid.currentTime+5); break;
+        case 'ArrowLeft':  e.preventDefault(); vid.currentTime = Math.max(0, vid.currentTime-5); break;
+        case 'ArrowUp':    e.preventDefault(); vid.volume = Math.min(1, vid.volume+0.1); volSlider.value=vid.volume; updateVolIcons(); break;
+        case 'ArrowDown':  e.preventDefault(); vid.volume = Math.max(0, vid.volume-0.1); volSlider.value=vid.volume; updateVolIcons(); break;
+        case 'f': fsBtn.click(); break;
+        case 'm': muteBtn.click(); break;
+        case 'c': ccBtn.click(); break;
+      }
+    });
+
+    // ── Double-click fullscreen ──
+    vid.addEventListener('dblclick', ()=>{ fsBtn.click(); });
+
+  })();
+
+  // Sources toggle
+  (function(){
+    const btn = document.getElementById('sources-toggle');
+    const list = document.getElementById('sources-list');
+    if(!btn || !list) return;
+    btn.addEventListener('click', ()=>{
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!open));
+      list.hidden = open;
+      btn.innerText = open ? 'Quellen ▾' : 'Quellen ▴';
+    });
+  })();
+  </script>
+</body>
+</html>

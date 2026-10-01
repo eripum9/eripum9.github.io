@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Europa‑Projekt — Schulprojekte</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-bar">
+      <a class="brand" href="../">Schulprojekte</a>
+      <nav class="site-nav"><a href="../">Zurück</a></nav>
+      <div style="display:flex;align-items:center;gap:1rem">
+        <button id="theme-toggle" class="theme-toggle" aria-label="Farbschema umschalten" aria-pressed="false">
+          <img src="../assets/icons/sun.svg" class="icon sun" alt="" aria-hidden="true"/>
+          <img src="../assets/icons/moon.svg" class="icon moon" alt="" aria-hidden="true"/>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Inline project card: image left and description to the right on wide screens; stacks on small screens -->
+    <div class="card project" role="article" style="--i:0">
+      <div style="display:flex;gap:1rem;align-items:flex-start;flex-wrap:wrap">
+        <img src="../assets/images/europa-thumb.jpg" loading="lazy" class="project-thumb" alt="Europa‑Projekt image" />
+        <div class="project-body">
+          <h1>Europa‑Projekt</h1>
+          <p>Diese Unterseite bündelt alle relevanten Links aus der Europaproject-Box sowie sämtliche zugehörigen Daten und bisherigen Arbeitsergebnisse. Sie dient als zentrale Übersicht und Dokumentation des aktuellen Projektstands.</p>
+        </div>
+      </div>
+    </div>
+
+    <section class="card">
+      <h2>Unterseiten</h2>
+      <div class="projects">
+        <div class="card project" role="listitem" style="--i:1">
+          <a class="project-link" href="asylpolitik/">
+            <img src="../assets/images/asyl-thumb.jpg" loading="lazy" class="project-thumb" alt="Asylpolitik Thumbnail" />
+            <div class="project-body">
+              <h2>Asylpolitik in der EU</h2>
+              <p class="project-desc">Analyse der Asylpolitik in ausgewählten EU‑Ländern: kompakte Pro/Contra‑Übersichten, Quellen und weiterführende Materialien zur aktuellen Debatte.</p>
+            </div>
+          </a>
+        </div>
+
+        <div class="card project" role="listitem" style="--i:2">
+          <a class="project-link" href="asyl-de2025/">
+            <img src="../assets/images/asyl-de2025-thumb.jpg" loading="lazy" class="project-thumb" alt="Die Asyllage in Deutschland 2025 Thumbnail" />
+            <div class="project-body">
+              <h2>Die Asyllage in Deutschland 2025</h2>
+              <p class="project-desc">Analyse der Lage 2025: Rechtslage, Zahlen und regionale Auswirkungen.</p>
+            </div>
+          </a>
+        </div>
+
+        <div class="card project" role="listitem" style="--i:3">
+          <a class="project-link" href="asyl-euweit/">
+            <img src="../assets/images/asyl-euweit-thumb.jpg" loading="lazy" class="project-thumb" alt="Sollte es eine EU-weite Asylpolitik geben? Thumbnail" />
+            <div class="project-body">
+              <h2>Sollte es eine EU-weite Asylpolitik geben?</h2>
+              <p class="project-desc">Diskussionsseite: Vor- und Nachteile einer einheitlichen EU-Asylpolitik; Argumente und weiterführende Links.</p>
+            </div>
+          </a>
+        </div>
+
+        <div class="card project" role="listitem" style="--i:4">
+          <a class="project-link" href="festung-europa/">
+            <img src="../assets/images/festung-europa-thumb.jpg" loading="lazy" class="project-thumb" alt="Festung Europa? Thumbnail" />
+            <div class="project-body">
+              <h2>Festung Europa? — Warum die EU an ihrer Asylpolitik scheitert</h2>
+              <p class="project-desc">Kurzdokumentation mit eigenem Videoplayer: Von Schengen über die Krise 2015 bis zur Verschärfung 2025.</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+
+  <footer class="site-footer"><small>© eripum9</small></footer>
+  <script src="../js/theme.js"></script>
+</body>
+</html>
